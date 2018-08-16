@@ -6,6 +6,8 @@ filtering out irrelevant listings based on certain criteria, including posting l
 
 
 ======Project Breakdown======
+-Follows Model, View, Controller (MVC) design pattern
+
 -Main: contains the main method; starts the program
 -Search: represents one search with the parameters of the query (i.e. price, miles, year, etc.)
 -Advertisement: represents one listing on the website (title, location, url, attributes, age, images, description)
