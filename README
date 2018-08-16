@@ -1,9 +1,11 @@
+# websearch-gui
+Searches for and displays results from craigslist.org for valid vehicle listings matching user criteria
+
 ======Description======
 Starts the web-searching program. The program first prompts the user with an interactive gui for a vehicle model
 to search craigslist.org for, and then it parses the resulting advertisements (using the external library JSoup),
 filtering out irrelevant listings based on certain criteria, including posting location and posting date
 (i.e. filters out old listings that are from nearby cities).
-
 
 ======Project Breakdown======
 -Follows Model, View, Controller (MVC) design pattern
