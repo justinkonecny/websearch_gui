@@ -33,13 +33,13 @@ public class ViewSearch extends JFrame implements IViewSearch {
     }
 
     @Override
-    public void showModelSelector(boolean visible) {
+    public void setModelSelectorVisibility(boolean visible) {
         this.setContentPane(this.panelModelSelector);
         this.setVisible(visible);
     }
 
     @Override
-    public void showResults(List<Advertisement> advertisements, boolean visible) {
+    public void updateResultsVisibility(List<Advertisement> advertisements, boolean visible) {
         this.panelViewResults.populateResults(advertisements);
         this.setSize(this.widthResults, this.heightResults);
         this.setContentPane(this.panelViewResults);
@@ -76,10 +76,5 @@ public class ViewSearch extends JFrame implements IViewSearch {
     @Override
     public void updateImageSelection(int key) {
         this.panelViewResults.updateImageSelection(key);
-    }
-
-    @Override
-    public void close() {
-        this.dispose();
     }
 }

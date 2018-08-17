@@ -32,15 +32,15 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
 
     @Override
     public void run() {
-        this.view.showModelSelector(true);
+        this.view.setModelSelectorVisibility(true);
     }
 
     private void executeSearch(String model) throws IOException {
         this.search.setModel(model);
-        this.view.showModelSelector(false);
+        this.view.setModelSelectorVisibility(false);
         this.advertisementList = this.model.executeSearch(this.search);
         this.printResults();
-        this.view.showResults(this.advertisementList, true);
+        this.view.updateResultsVisibility(this.advertisementList, true);
     }
 
     private void printResults() {
