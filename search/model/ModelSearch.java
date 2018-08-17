@@ -30,7 +30,11 @@ public class ModelSearch implements IModelSearch {
     }
 
     @Override
-    public List<Advertisement> executeSearch(Search search) throws IOException {
+    public List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException {
+        if (search == null) {
+            throw new IllegalArgumentException("Search cannot be null");
+        }
+
         System.out.println(String.format("[Search Parameters]: [model: %s], [min year: %d]", search.getModel(), search.getYearMinimum()));
         System.out.println(String.format("  [min price: %d], [max price: %d], [min miles: %d], [max miles: %d]",
                 search.getPriceMinimum(), search.getPriceMaximum(), search.getMilesMinimum(), search.getMilesMaximum()));
@@ -100,11 +104,6 @@ public class ModelSearch implements IModelSearch {
                     advertisement.setBody(adBody);
 
                     this.advertisements.add(advertisement);
-
-                    boolean flag = false;
-                    if (flag) {
-                        break;
-                    }
                 }
                 countTotal++;
             }
@@ -130,28 +129,32 @@ public class ModelSearch implements IModelSearch {
     }
 
     private void removeDuplicates(List<Advertisement> listAds) {
-        System.out.println("[Removing Duplicate Listings]");
-        List<Advertisement> listOrig = new ArrayList<Advertisement>(listAds);
-        List<String> listUnique = new ArrayList<String>();
+        if (listAds != null) {
+            System.out.println("[Removing Duplicate Listings]");
+            List<Advertisement> listOrig = new ArrayList<Advertisement>(listAds);
+            List<String> listUnique = new ArrayList<String>();
 
-        for (int i = 0; i < listOrig.size(); i++) {
-            if (listUnique.contains(listOrig.get(i).getTitle().toLowerCase())) {
-                listAds.remove(listOrig.get(i));
-            } else {
-                listUnique.add(listOrig.get(i).getTitle().toLowerCase());
+            for (int i = 0; i < listOrig.size(); i++) {
+                if (listUnique.contains(listOrig.get(i).getTitle().toLowerCase())) {
+                    listAds.remove(listOrig.get(i));
+                } else {
+                    listUnique.add(listOrig.get(i).getTitle().toLowerCase());
+                }
             }
+            System.out.println("[Total Listings Remaining]: " + this.advertisements.size());
+            System.out.println("========================================");
         }
-        System.out.println("[Total Listings Remaining]: " + this.advertisements.size());
-        System.out.println("========================================");
     }
 
     private String getCapitalized(String str) {
-        String cap = str.substring(0, 1).toUpperCase() + str.substring(1);
-        for (int i = 1; i < cap.length(); i++) {
-            if (cap.charAt(i) == ' ') {
-                cap = cap.substring(0, i + 1) + cap.substring(i + 1, i + 2).toUpperCase() + cap.substring(i + 2);
+        if (str != null && !str.equals("")) {
+            str = str.substring(0, 1).toUpperCase() + str.substring(1);
+            for (int i = 1; i < str.length(); i++) {
+                if (str.charAt(i) == ' ') {
+                    str = str.substring(0, i + 1) + str.substring(i + 1, i + 2).toUpperCase() + str.substring(i + 2);
+                }
             }
         }
-        return cap;
+        return str;
     }
 }

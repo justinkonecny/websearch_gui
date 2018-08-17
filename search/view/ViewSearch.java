@@ -53,9 +53,13 @@ public class ViewSearch extends JFrame implements IViewSearch {
 
     @Override
     public void addListeners(ActionListener actionListener, ListSelectionListener listListener, KeyListener keyListener) {
-        this.panelModelSelector.addActionListener(actionListener);
-        this.panelViewResults.addActionListener(actionListener);
-        this.panelViewResults.addListeners(listListener, keyListener);
+        if (actionListener == null || listListener == null || keyListener == null) {
+            throw new IllegalArgumentException("Given listeners cannot by null");
+        } else {
+            this.panelModelSelector.addActionListener(actionListener);
+            this.panelViewResults.addActionListener(actionListener);
+            this.panelViewResults.addListeners(listListener, keyListener);
+        }
     }
 
     @Override

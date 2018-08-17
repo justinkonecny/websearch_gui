@@ -38,8 +38,16 @@ public class Search {
      * @param milesMinimum the minimum number of miles
      * @param milesMaximum the maximum number of miles
      * @param yearMinimum the minimum year
+     * @throws IllegalArgumentException if the given model is null
+     * @throws IllegalArgumentException if the given prices, miles, or year are negative
      */
-    public Search(String model, int priceMinimum, int priceMaximum, int milesMinimum, int milesMaximum, int yearMinimum) {
+    public Search(String model, int priceMinimum, int priceMaximum, int milesMinimum, int milesMaximum, int yearMinimum)
+            throws IllegalArgumentException {
+        if (model == null) {
+            throw new IllegalArgumentException("Model cannot be null");
+        } else if (priceMinimum < 0 || priceMaximum < 0 || milesMinimum < 0 || milesMaximum < 0 || yearMinimum < 0) {
+            throw new IllegalArgumentException("Search parameters cannot be null");
+        }
         this.model = model.toLowerCase();
         this.priceMinimum = priceMinimum;
         this.priceMaximum = priceMaximum;
@@ -124,8 +132,12 @@ public class Search {
      * @param model the new model
      */
     public void setModel(String model) {
-        this.model = model.toLowerCase();
-        this.adjustSearchParameters();
+        if (model == null) {
+            this.model = "";
+        } else {
+            this.model = model.toLowerCase();
+            this.adjustSearchParameters();
+        }
     }
 
     /**
