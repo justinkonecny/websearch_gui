@@ -62,23 +62,40 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
     public void actionPerformed(ActionEvent actionEvent) {
         String command = actionEvent.getActionCommand();
         if (command != null && !command.isEmpty()) {
-            if (command.equals("open")) {
-                //opens the selected listing
-                this.view.openSelected();
-            } else if (command.equals("openall")) {
-                //opens all listings
-                this.view.openAll();
-            } else {
-                //attempts to execute a search otherwise (post model selection)
-                try {
-                    this.executeSearch(command);
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
+            this.processActionCommand(command);
+        }
+    }
+
+    /**
+     * Processes user input from an action command. Handles input to execute a search,
+     * open the selected listing urls, or open all listing urls.
+     *
+     * @param command the command to process
+     */
+    private void processActionCommand(String command) {
+        if (command.equals("open")) {
+            //opens the selected listing
+            this.view.openSelected();
+        } else if (command.equals("openall")) {
+            //opens all listings
+            this.view.openAll();
+        } else {
+            //attempts to execute a search otherwise (post model selection)
+            try {
+                this.executeSearch(command);
+            } catch (IOException exception) {
+                exception.printStackTrace();
             }
         }
     }
 
+    /**
+     * Calls the model's search execution method, given an updated vehicle model to search for, hides the model
+     * selection gui, and prints/displays the search results.
+     *
+     * @param model the updated vehicle model to search for
+     * @throws IOException if the model fails to connect to the search URLs
+     */
     private void executeSearch(String model) throws IOException {
         this.search.setModel(model);
         this.view.setModelSelectorVisibility(false);
@@ -87,6 +104,9 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
         this.view.updateResultsVisibility(this.advertisementList, true);
     }
 
+    /**
+     * Prints all search results to the console.
+     */
     private void printResults() {
         for (int i = 0; i < this.advertisementList.size(); i++) {
             Advertisement ad = advertisementList.get(i);
@@ -94,16 +114,26 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
         }
     }
 
+    /**
+     * Processes changes in the selected listing from the view to update which listing is displayed to the user.
+     *
+     * @param selectionEvent the list selection event to process
+     */
     @Override
-    public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) {
+    public void valueChanged(ListSelectionEvent selectionEvent) {
+        if (!selectionEvent.getValueIsAdjusting()) {
             this.view.updateListingSelection();
         }
     }
 
+    /**
+     * Processes key presses from the view to update which listing image is displayed to the user.
+     *
+     * @param keyEvent the key event to process
+     */
     @Override
-    public void keyPressed(KeyEvent e) {
-        int key = e.getExtendedKeyCode();
+    public void keyPressed(KeyEvent keyEvent) {
+        int key = keyEvent.getExtendedKeyCode();
         if (key == KeyEvent.VK_LEFT || key == KeyEvent.VK_RIGHT) {
             this.view.updateImageSelection(key);
         }

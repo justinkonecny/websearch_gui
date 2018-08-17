@@ -85,12 +85,14 @@ public class PanelViewResults extends AbstractPanel {
     }
 
     public void openSelected() {
-        try {
-            Desktop.getDesktop().browse(new URI(this.advertisements.get(this.currentListingIndex).getLink()));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch( IOException e) {
-            e.printStackTrace();
+        if (this.currentListingIndex < this.advertisements.size()) {
+            try {
+                Desktop.getDesktop().browse(new URI(this.advertisements.get(this.currentListingIndex).getLink()));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
