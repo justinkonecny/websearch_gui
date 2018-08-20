@@ -63,4 +63,9 @@ public interface IViewSearch {
      * Opens all listings previously passed to the view in the system's default web browser.
      */
     void openAll();
+
+    /**
+     * Removes the selected listing from the Advertisements displayed to the user.
+     */
+    void removeSelectedListing();
 }

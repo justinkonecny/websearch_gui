@@ -69,7 +69,7 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
 
     /**
      * Processes user input from an action command. Handles input to execute a search,
-     * open the selected listing urls, or open all listing urls.
+     * open the selected listing urls, open all listing urls, or remove the selected listing.
      *
      * @param command the command to process
      */
@@ -80,6 +80,9 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
         } else if (command.equals("openall")) {
             //opens all listings
             this.view.openAll();
+        } else if (command.equals("remove")) {
+            //removes the selected listing
+            this.view.removeSelectedListing();
         } else {
             //attempts to execute a search otherwise (post model selection)
             try {
@@ -100,7 +103,11 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
     private void executeSearch(String model) throws IOException {
         this.search.setModel(model);
         this.view.setModelSelectorVisibility(false);
-        this.advertisementList = this.model.executeSearch(this.search);
+        //this.advertisementList = this.model.executeSearch(this.search);
+        this.advertisementList.add(new Advertisement());
+        this.advertisementList.add(new Advertisement());
+        this.advertisementList.add(new Advertisement());
+        this.advertisementList.add(new Advertisement());
         this.printResults();
         this.view.updateResultsVisibility(this.advertisementList, true);
     }

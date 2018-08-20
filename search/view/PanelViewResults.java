@@ -28,6 +28,8 @@ public class PanelViewResults extends AbstractPanel {
     private JButton buttonOpen;
     //the button to open all listings
     private JButton buttonOpenAll;
+    //the button to remove a displayed Advertisement
+    private JButton buttonRemove;
     //the scroll pane to contain the listings
     private JScrollPane scrollPane;
     //the text area to display the listing description/body
@@ -53,6 +55,7 @@ public class PanelViewResults extends AbstractPanel {
         this.advertisements = new ArrayList<Advertisement>();
         this.buttonOpen = new Button("Open Selection", "open");
         this.buttonOpenAll = new Button("Open All", "openall");
+        this.buttonRemove = new Button("Remove", "remove");
         this.listModelTitle = new DefaultListModel<String>();
         this.listTitle = new JList<String>(this.listModelTitle);
         this.scrollPane = new JScrollPane(this.listTitle);
@@ -68,13 +71,21 @@ public class PanelViewResults extends AbstractPanel {
      * Updates the displayed Advertisement based on the current selected listing.
      */
     public void updateListingSelection() {
-        this.currentImageIndex = 0;
-        this.currentListingIndex = this.listTitle.getSelectedIndex();
-        Advertisement ad = this.advertisements.get(this.currentListingIndex);
+        if (this.listModelTitle.size() > 0) {
+            int index = this.listTitle.getSelectedIndex();
+            this.currentImageIndex = 0;
+            this.currentListingIndex = (index >= 0) ? index : 0;
+            Advertisement ad = this.advertisements.get(this.currentListingIndex);
 
-        this.textAttributes.setText(ad.getAttributes() + System.lineSeparator());
-        this.textAttributes.append(ad.getBody());
-        this.image.setIcon(new ImageIcon(ad.getImages().get(this.currentImageIndex)));
+            this.textAttributes.setText(ad.getAttributes() + System.lineSeparator());
+            this.textAttributes.append(ad.getBody());
+
+            if (ad.getImages().size() > 0) {
+                this.image.setIcon(new ImageIcon(ad.getImages().get(this.currentImageIndex)));
+            } else {
+                this.image.setIcon(new ImageIcon());
+            }
+        }
     }
 
     /**
@@ -155,6 +166,19 @@ public class PanelViewResults extends AbstractPanel {
         }
     }
 
+
+    /**
+     * Removes the selected listing from the Advertisements displayed to the user.
+     */
+    public void removeSelectedListing() {
+        if (this.currentListingIndex >= 0) {
+            int index = this.currentListingIndex;
+            this.listModelTitle.remove(this.currentListingIndex);
+            this.currentListingIndex = index - 1;
+            this.listTitle.setSelectedIndex(this.currentListingIndex);
+        }
+    }
+
     /**
      * Adds the given ActionListener to this panel's relevant components.
      *
@@ -164,6 +188,7 @@ public class PanelViewResults extends AbstractPanel {
     public void addActionListener(ActionListener actionListener) {
         this.buttonOpen.addActionListener(actionListener);
         this.buttonOpenAll.addActionListener(actionListener);
+        this.buttonRemove.addActionListener(actionListener);
     }
 
     /**
@@ -177,8 +202,9 @@ public class PanelViewResults extends AbstractPanel {
         int buttonWidth = this.width / 4;
         int buttonHeight = 30;
 
-        this.buttonOpen.setBounds(2, 2, buttonWidth, buttonHeight);
-        this.buttonOpenAll.setBounds(buttonWidth + 4, 2, buttonWidth, buttonHeight);
+        this.buttonOpen.setBounds(2, 4, buttonWidth, buttonHeight);
+        this.buttonOpenAll.setBounds(buttonWidth + 4, 4, buttonWidth, buttonHeight);
+        this.buttonRemove.setBounds(buttonWidth * 2 + 6, 4, buttonWidth, buttonHeight);
 
         this.scrollPane.setBounds(0, 40, this.width, objHeight);
         this.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -187,6 +213,7 @@ public class PanelViewResults extends AbstractPanel {
         this.textAttributes.setBounds(10, objHeight + 50, objWidth - 20, objHeight * 2 - 20);
         this.image.setBounds(objWidth, objHeight + 40, objWidth, objHeight * 2);
 
+        this.add(this.buttonRemove);
         this.add(this.buttonOpen);
         this.add(this.buttonOpenAll);
         this.add(this.scrollPane);

@@ -129,4 +129,12 @@ public class ViewSearch extends JFrame implements IViewSearch {
     public void updateImageSelection(int key) {
         this.panelViewResults.updateImageSelection(key);
     }
+
+    /**
+     * Removes the selected listing from the Advertisements displayed to the user.
+     */
+    @Override
+    public void removeSelectedListing() {
+        this.panelViewResults.removeSelectedListing();
+    }
 }
