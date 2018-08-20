@@ -70,9 +70,7 @@ public class ModelSearch implements IModelSearch {
             Iterator<Element> listIter = listHtml.iterator();
             while (listIter.hasNext()) {
                 Element adHtml = listIter.next();
-                Advertisement advertisement = new Advertisement();
                 String adTitle = this.getCapitalized(adHtml.getElementsByTag("p").select("a[href^=\"http\"]").text());
-
                 String[] adDate = adHtml.getElementsByTag("time").attr("datetime").split(" ")[0].split("-");
                 int adAge = this.getTimeDelta(Integer.valueOf(adDate[0]),
                         Integer.valueOf(adDate[1]), Integer.valueOf(adDate[2]));
@@ -81,44 +79,11 @@ public class ModelSearch implements IModelSearch {
 
                 if (adAge <= this.oldestPostAge && adLocation != "newyork" && adLocation != "philadelphia") {
                     countValid++;
-                    Document adSoup = Jsoup.connect(adLink).get();
-
-                    List<Image> adImageList = new ArrayList<Image>();
-                    Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
-                    for (Element thumb : adThumbs) {
-                        URL thumbUrl = new URL(thumb.attr("href"));
-                        try {
-                            Image image = ImageIO.read(thumbUrl);
-                            adImageList.add(image);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    Element adBodyHtml = adSoup.getElementsByTag("section").select("[id=postingbody]").first();
-                    String adBody = adBodyHtml.ownText();
-
-                    Elements attrs = adSoup.getElementsByTag("p").select(".attrgroup");
-                    String adAttr = "";
-                    Iterator<Element> attrItr = attrs.iterator();
-                    while (attrItr.hasNext()) {
-                        Element attr = attrItr.next();
-
-                        Iterator<Element> attrChildrenItr = attr.children().select("span").iterator();
-                        while (attrChildrenItr.hasNext()) {
-                            Element child = attrChildrenItr.next();
-                            adAttr += (this.getCapitalized(child.text()) + System.lineSeparator());
-                        }
-                    }
-
+                    Advertisement advertisement = new Advertisement();
                     advertisement.setTitle(adTitle);
                     advertisement.setLocation(adLocation);
                     advertisement.setAge(adAge);
                     advertisement.setLink(adLink);
-                    advertisement.setAttributes(adAttr);
-                    advertisement.setImages(adImageList);
-                    advertisement.setBody(adBody);
-
                     this.advertisements.add(advertisement);
                 }
                 countTotal++;
@@ -133,8 +98,48 @@ public class ModelSearch implements IModelSearch {
         System.out.println("========================================");
 
         this.removeDuplicates(this.advertisements);
+        this.populateAdvertisements();
 
         return this.advertisements;
+    }
+
+    /**
+     * Connects to the URL of each Advertisement to save the listing images and attributes.
+     *
+     * @throws IOException if the advertisement link cannot be connect to
+     */
+    private void populateAdvertisements() throws IOException {
+        for (Advertisement advertisement : this.advertisements) {
+            String adLink = advertisement.getLink();
+            Document adSoup = Jsoup.connect(adLink).get();
+            List<Image> adImageList = new ArrayList<Image>();
+            Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
+            for (Element thumb : adThumbs) {
+                URL thumbUrl = new URL(thumb.attr("href"));
+                try {
+                    Image image = ImageIO.read(thumbUrl);
+                    adImageList.add(image);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            Element adBodyHtml = adSoup.getElementsByTag("section").select("[id=postingbody]").first();
+            String adBody = adBodyHtml.ownText();
+            Elements attrs = adSoup.getElementsByTag("p").select(".attrgroup");
+            String adAttr = "";
+            Iterator<Element> attrItr = attrs.iterator();
+            while (attrItr.hasNext()) {
+                Element attr = attrItr.next();
+                Iterator<Element> attrChildrenItr = attr.children().select("span").iterator();
+                while (attrChildrenItr.hasNext()) {
+                    Element child = attrChildrenItr.next();
+                    adAttr += (this.getCapitalized(child.text()) + System.lineSeparator());
+                }
+            }
+            advertisement.setAttributes(adAttr);
+            advertisement.setImages(adImageList);
+            advertisement.setBody(adBody);
+        }
     }
 
     /**
@@ -153,7 +158,7 @@ public class ModelSearch implements IModelSearch {
     }
 
     /**
-     * Removes duplicate listings (based on matching title) from the given list.
+     * Removes duplicate Advertisements (based on matching title) from the given list.
      *
      * @param listAds the list of Advertisements to remove duplicates from
      */

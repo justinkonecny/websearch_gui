@@ -103,11 +103,7 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
     private void executeSearch(String model) throws IOException {
         this.search.setModel(model);
         this.view.setModelSelectorVisibility(false);
-        //this.advertisementList = this.model.executeSearch(this.search);
-        this.advertisementList.add(new Advertisement());
-        this.advertisementList.add(new Advertisement());
-        this.advertisementList.add(new Advertisement());
-        this.advertisementList.add(new Advertisement());
+        this.advertisementList = this.model.executeSearch(this.search);
         this.printResults();
         this.view.updateResultsVisibility(this.advertisementList, true);
     }
