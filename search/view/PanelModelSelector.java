@@ -3,13 +3,25 @@ package search.view;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 
+/**
+ * Represents the panel for the vehicle model selection gui.
+ */
 public class PanelModelSelector extends AbstractPanel {
-
+    //the button to run the search for "bmw"
     private JButton buttonBmw;
+    //the button to run the search for "mercedes"
     private JButton buttonMercedes;
+    //the button to run the search for "wrangler"
     private JButton buttonJeep;
+    //the text field to enter other models
     private JTextField textModelOther;
 
+    /**
+     * Constructs the vehicle model selection panel with the given width and height.
+     *
+     * @param width the width of the panel.
+     * @param height the height of the panel.
+     */
     public PanelModelSelector(int width, int height) {
         super(width, height);
 
@@ -21,6 +33,11 @@ public class PanelModelSelector extends AbstractPanel {
         this.adjustComponentBoundaries();
     }
 
+    /**
+     * Adds the given ActionListener to this panel's relevant components.
+     *
+     * @param listener the action listener to add
+     */
     @Override
     public void addActionListener(ActionListener listener) {
         this.buttonBmw.addActionListener(listener);
@@ -29,6 +46,9 @@ public class PanelModelSelector extends AbstractPanel {
         this.textModelOther.addActionListener(listener);
     }
 
+    /**
+     * Adjusts this panel's components to fit to specific boundaries.
+     */
     @Override
     protected void adjustComponentBoundaries() {
         int objPosX = 10;

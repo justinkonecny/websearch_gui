@@ -17,6 +17,7 @@ public interface IModelSearch {
      * @param search the Search containing all parameters desired in the results
      * @return the list of Advertisements found matching the search parameters
      * @throws IOException if the search URLS cannot be opened or the web page cannot be accessed
+     * @throws IllegalArgumentException if the given Search is null
      */
-    List<Advertisement> executeSearch(Search search) throws IOException;
+    List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException;
 }

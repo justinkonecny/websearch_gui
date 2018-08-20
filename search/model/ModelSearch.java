@@ -19,16 +19,32 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents the model implementation to execute searches and parse the results.
+ */
 public class ModelSearch implements IModelSearch {
-
+    //the list of Advertisements processes from the search
     private List<Advertisement> advertisements;
+    //the oldest acceptable post to include in the results
     private int oldestPostAge;
 
+    /**
+     * Constructs the model with an empty list of Advertisements and sets the oldest
+     * acceptable posting age to fourteen days.
+     */
     public ModelSearch() {
         this.advertisements = new ArrayList<Advertisement>();
         this.oldestPostAge = 14;
     }
 
+    /**
+     * Executes the given Search and returns the resulting listings.
+     *
+     * @param search the Search containing all parameters desired in the results
+     * @return the list of Advertisements found matching the search parameters
+     * @throws IOException if the search URLS cannot be opened or the web page cannot be accessed
+     * @throws IllegalArgumentException if the given Search is null
+     */
     @Override
     public List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException {
         if (search == null) {
@@ -121,6 +137,14 @@ public class ModelSearch implements IModelSearch {
         return this.advertisements;
     }
 
+    /**
+     * Calculates the time difference (in days) between now and the given date.
+     *
+     * @param year the date's year
+     * @param month the date's month
+     * @param day the date's day
+     * @return the difference in time (in days)
+     */
     private int getTimeDelta(int year, int month, int day) {
         LocalDate then = LocalDate.of(year, month, day);
         LocalDate now = LocalDateTime.now().toLocalDate();
@@ -128,6 +152,11 @@ public class ModelSearch implements IModelSearch {
         return period.getDays();
     }
 
+    /**
+     * Removes duplicate listings (based on matching title) from the given list.
+     *
+     * @param listAds the list of Advertisements to remove duplicates from
+     */
     private void removeDuplicates(List<Advertisement> listAds) {
         if (listAds != null) {
             System.out.println("[Removing Duplicate Listings]");
@@ -146,6 +175,12 @@ public class ModelSearch implements IModelSearch {
         }
     }
 
+    /**
+     * Returns the given String with all words capitalized.
+     *
+     * @param str the String to capitalize
+     * @return the capitalized String
+     */
     private String getCapitalized(String str) {
         if (str != null && !str.equals("")) {
             str = str.substring(0, 1).toUpperCase() + str.substring(1);

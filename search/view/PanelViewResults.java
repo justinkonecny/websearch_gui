@@ -14,19 +14,37 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the panel for the gui that displays the search results to the user.
+ */
 public class PanelViewResults extends AbstractPanel {
-
+    //the list of Advertisement returned from the search
     private List<Advertisement> advertisements;
+    //the list model component to display the advertisement titles
     private DefaultListModel<String> listModelTitle;
+    //the list component to display the advertisement titles
     private JList<String> listTitle;
+    //the button to open the selected listing
     private JButton buttonOpen;
+    //the button to open all listings
     private JButton buttonOpenAll;
+    //the scroll pane to contain the listings
     private JScrollPane scrollPane;
+    //the text area to display the listing description/body
     private JTextArea textAttributes;
+    //the image of the selected listing
     private JLabel image;
+    //the current index of the selected listing
     private int currentListingIndex;
+    //the current index of the selected image of this listings
     private int currentImageIndex;
 
+    /**
+     * Constructs the results panel with the given with and height.
+     *
+     * @param width the width of the panel
+     * @param height the height of the panel
+     */
     public PanelViewResults(int width, int height) {
         super(width, height);
         this.currentListingIndex = 0;
@@ -46,6 +64,9 @@ public class PanelViewResults extends AbstractPanel {
         this.adjustComponentBoundaries();
     }
 
+    /**
+     * Updates the displayed Advertisement based on the current selected listing.
+     */
     public void updateListingSelection() {
         this.currentImageIndex = 0;
         this.currentListingIndex = this.listTitle.getSelectedIndex();
@@ -56,21 +77,34 @@ public class PanelViewResults extends AbstractPanel {
         this.image.setIcon(new ImageIcon(ad.getImages().get(this.currentImageIndex)));
     }
 
+    /**
+     * Updates the displayed image for the Advertisement based on the pressed key. The right and left
+     * arrow keys cycle through the list of pictures (right increments index, left decrements index).
+     *
+     * @param key the key pressed by the user
+     */
     public void updateImageSelection(int key) {
         List<Image> imageList = this.advertisements.get(this.currentListingIndex).getImages();
         if (key == KeyEvent.VK_RIGHT && this.currentImageIndex < imageList.size() - 1) {
+            //increment index if right arrow key is pressed
             this.currentImageIndex++;
             this.image.setIcon(new ImageIcon(imageList.get(this.currentImageIndex)));
         } else if (key == KeyEvent.VK_LEFT && this.currentImageIndex > 0) {
+            //decrement index if the left arrow key is pressed
             this.currentImageIndex--;
             this.image.setIcon(new ImageIcon(imageList.get(this.currentImageIndex)));
         }
     }
 
+    /**
+     * Updates the list of Advertisement displayed in this panel to the given list.
+     *
+     * @param advertisementList the new list of Advertisement to display
+     */
     public void populateResults(List<Advertisement> advertisementList) {
         if (advertisementList != null) {
             this.advertisements = advertisementList;
-
+            this.listModelTitle.clear();
             for (Advertisement ad : this.advertisements) {
                 this.listModelTitle.addElement(ad.getTitle());
             }
@@ -79,11 +113,21 @@ public class PanelViewResults extends AbstractPanel {
         this.updateListingSelection();
     }
 
-    public void addListeners(ListSelectionListener listener, KeyListener keyListener) {
-        this.listTitle.addListSelectionListener(listener);
+    /**
+     * Adds the given ListSelectionListener and KeyListener to the list's set of listeners to allow
+     * users to select items on the list of Advertisement.
+     *
+     * @param listListener the list selection listener for the list
+     * @param keyListener the key listener for the list
+     */
+    public void addListeners(ListSelectionListener listListener, KeyListener keyListener) {
+        this.listTitle.addListSelectionListener(listListener);
         this.listTitle.addKeyListener(keyListener);
     }
 
+    /**
+     * Opens the link of the selected Advertisement in the system's default web browser.
+     */
     public void openSelected() {
         if (this.currentListingIndex < this.advertisements.size()) {
             try {
@@ -96,6 +140,9 @@ public class PanelViewResults extends AbstractPanel {
         }
     }
 
+    /**
+     * Opens all links of in the list of Advertisement in the system's default web browser.S
+     */
     public void openAll() {
         for (Advertisement ad : this.advertisements) {
             try {
@@ -108,12 +155,20 @@ public class PanelViewResults extends AbstractPanel {
         }
     }
 
+    /**
+     * Adds the given ActionListener to this panel's relevant components.
+     *
+     * @param actionListener the action listener to add
+     */
     @Override
     public void addActionListener(ActionListener actionListener) {
         this.buttonOpen.addActionListener(actionListener);
         this.buttonOpenAll.addActionListener(actionListener);
     }
 
+    /**
+     * Adjusts this panel's components to fit to specific boundaries.
+     */
     @Override
     protected void adjustComponentBoundaries() {
         int objWidth = this.width / 2;

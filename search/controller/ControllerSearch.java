@@ -16,7 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents the controller implementation to handle program execution, flow of information, and user input.
+ * Represents the controller implementation to handle program execution, flow of information, and user input. Acts
+ * as an ActionListener, ListSelectionListener, and KeyListener.
  */
 public class ControllerSearch implements IControllerSearch, ActionListener, ListSelectionListener, KeyListener {
     //the list of advertisements resulting from a search
