@@ -1,0 +1,27 @@
+Sample Console Output:
+
+[Search Parameters]: [model: bmw], [min year: 2009]
+  [min price: 5000], [max price: 9000], [min miles: 50000], [max miles: 80000]
+========================================
+[Parsing]: BMW NNJ
+[Total Listings Found]: 24
+[Valid Listings Found]: 6
+========================================
+[Parsing]: BMW CNJ
+[Total Listings Found]: 24
+[Valid Listings Found]: 6
+========================================
+[Parsing]: BMW SNJ
+[Total Listings Found]: 1
+[Valid Listings Found]: 0
+========================================
+[Combined Total Found]: 12
+========================================
+[Removing Duplicate Listings]
+[Total Listings Remaining]: 5
+========================================
+[01]:[00]: 2009 BMW 328XI Excellent Condition Low Mileage Clean Carfax
+[02]:[04]: 2010 BMW 528i Xdrive AWD, Navigation! Only 80k Miles!
+[03]:[04]: 2010 BMW 528i Xdrive AWD, Navigation Only 80k Miles
+[04]:[06]: 2010 BMW 528i Xdrive AWD, Navigation
+[05]:[09]: 2010 Bmw 528i Xdrive AWD, Navigation Only 79k Miles
