@@ -6,6 +6,7 @@ Starts the web-searching program. The program first prompts the user with an int
 to search craigslist.org for, and then it parses the resulting advertisements (using the external library JSoup),
 filtering out irrelevant listings based on certain criteria, including posting location and posting date
 (i.e. filters out old listings that are from nearby cities).
+-Requires: jsoup-1.11.3+
 
 ======Project Breakdown======
 -Follows Model, View, Controller (MVC) design pattern
