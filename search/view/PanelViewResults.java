@@ -166,15 +166,18 @@ public class PanelViewResults extends AbstractPanel {
         }
     }
 
-
     /**
      * Removes the selected listing from the Advertisements displayed to the user.
      */
     public void removeSelectedListing() {
         if (this.currentListingIndex >= 0) {
             int index = this.currentListingIndex;
-            this.listModelTitle.remove(this.currentListingIndex);
-            this.currentListingIndex = index - 1;
+            this.listModelTitle.remove(index);
+            this.advertisements.remove(index);
+            this.currentListingIndex = index;
+            if (this.currentListingIndex > 0) {
+                this.currentListingIndex--;
+            }
             this.listTitle.setSelectedIndex(this.currentListingIndex);
         }
     }

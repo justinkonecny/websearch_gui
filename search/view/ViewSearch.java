@@ -18,11 +18,10 @@ public class ViewSearch extends JFrame implements IViewSearch {
     private PanelModelSelector panelModelSelector;
     //the panel to display the search results
     private PanelViewResults panelViewResults;
-
+    //the panel to display the search options editor
     private PanelAttributeEdit panelAttributeEdit;
-
+    //the search containing the search options
     private Search search;
-
     //the width of the model selection gui
     private int widthModel;
     //the height of the model selection gui
@@ -31,8 +30,9 @@ public class ViewSearch extends JFrame implements IViewSearch {
     private int widthResults;
     //the height of the results gui
     private int heightResults;
-
+    //the width of the search option gui
     private int widthAttribute;
+    //the height of the search option gui
     private int heightAttribute;
 
     /**
