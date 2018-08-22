@@ -12,6 +12,7 @@ import search.view.ViewSearch;
  * to search craigslist.org for, and then it parses the resulting advertisements (using the external library JSoup),
  * filtering out irrelevant listings based on certain criteria, including posting location and posting date
  * (i.e. filters out old listings that are from nearby cities).
+ * [Project requires jsoup-1.11.3+]
  */
 public class Main {
 
