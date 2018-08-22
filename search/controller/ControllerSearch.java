@@ -50,7 +50,7 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
      */
     @Override
     public void run() {
-        this.view.setModelSelectorVisibility(true);
+        this.view.displayModelGUI();
     }
 
     /**
@@ -86,12 +86,16 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
             //removes the selected listing
             this.view.removeSelectedListing();
         } else if (command.equals("cmd:continue")) {
-            this.view.updateSearch();
+            this.view.updateSearchFromInput();
             //attempts to execute a search otherwise (post model selection)
             this.executeSearch();
+        } else if (command.equals("cmd:newsearch")) {
+            //displays the model selection gui to restart searching
+            this.view.displayModelGUI();
         } else {
+            //otherwise input from model selection gui
             this.search.setModel(command);
-            this.view.showAttributeEditor(this.search);
+            this.view.displayOptionsGUI(this.search);
         }
     }
 
@@ -101,10 +105,10 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
      */
     private void executeSearch() {
         try {
-            this.view.setModelSelectorVisibility(false);
+            this.view.hideFrame();
             this.advertisementList = this.model.executeSearch(this.search);
             this.printResults();
-            this.view.updateResultsVisibility(this.advertisementList, true);
+            this.view.displayResultsGUI(this.advertisementList);
         } catch (IOException e) {
             System.out.println("[Failed to execute search]");
             e.printStackTrace();

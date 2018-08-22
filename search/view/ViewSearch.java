@@ -57,36 +57,39 @@ public class ViewSearch extends JFrame implements IViewSearch {
     }
 
     /**
-     * Sets the visibility of the model selection gui.
-     *
-     * @param visible whether or not the model selection gui is visible
+     * Displays the model selection gui for the user to select a model to search for.
      */
     @Override
-    public void setModelSelectorVisibility(boolean visible) {
+    public void displayModelGUI() {
+        this.setSize(this.widthModel, this.heightModel);
         this.setContentPane(this.panelModelSelector);
-        this.setVisible(visible);
+        this.setVisible(true);
     }
 
     /**
-     * Given a list of Advertisements, sets the visibility of the results gui to the given value
+     * Displays the search option edit gui to alter search parameters.
      *
-     * @param advertisements the list of Advertisements to display
-     * @param visible whether or not the results gui is visible
+     * @param search the search with parameters to display and edit
      */
     @Override
-    public void updateResultsVisibility(List<Advertisement> advertisements, boolean visible) {
+    public void displayOptionsGUI(Search search) {
+        this.search = search;
+        this.panelAttributeEdit.setDisplayedSearch(search);
+        this.setSize(this.widthAttribute, this.heightAttribute);
+        this.setContentPane(this.panelAttributeEdit);
+        this.setVisible(true);
+    }
+
+    /**
+     * Displays the results gui with the given list of Advertisement
+     *
+     * @param advertisements the list of Advertisements to display
+     */
+    @Override
+    public void displayResultsGUI(List<Advertisement> advertisements) {
         this.panelViewResults.populateResults(advertisements);
         this.setSize(this.widthResults, this.heightResults);
         this.setContentPane(this.panelViewResults);
-        this.setVisible(visible);
-    }
-
-    @Override
-    public void showAttributeEditor(Search search) {
-        this.search = search;
-        this.panelAttributeEdit.setSearch(search);
-        this.setSize(this.widthAttribute, this.heightAttribute);
-        this.setContentPane(this.panelAttributeEdit);
         this.setVisible(true);
     }
 
@@ -155,8 +158,19 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.panelViewResults.removeSelectedListing();
     }
 
+    /**
+     * Updates the view's Search based on user input.
+     */
     @Override
-    public void updateSearch() {
-        this.panelAttributeEdit.updateSearch();
+    public void updateSearchFromInput() {
+        this.panelAttributeEdit.updateSearchFromTextFields();
+    }
+
+    /**
+     * Hides this view from screen.
+     */
+    @Override
+    public void hideFrame() {
+        this.setVisible(false);
     }
 }

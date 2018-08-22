@@ -30,6 +30,8 @@ public class PanelViewResults extends AbstractPanel {
     private JButton buttonOpenAll;
     //the button to remove a displayed Advertisement
     private JButton buttonRemove;
+    //the button to start a new search
+    private JButton buttonSearch;
     //the scroll pane to contain the listings
     private JScrollPane scrollPane;
     //the text area to display the listing description/body
@@ -56,6 +58,7 @@ public class PanelViewResults extends AbstractPanel {
         this.buttonOpen = new Button("Open Selection", "cmd:open");
         this.buttonOpenAll = new Button("Open All", "cmd:openall");
         this.buttonRemove = new Button("Remove", "cmd:remove");
+        this.buttonSearch = new Button("New Search", "cmd:newsearch");
         this.listModelTitle = new DefaultListModel<String>();
         this.listTitle = new JList<String>(this.listModelTitle);
         this.scrollPane = new JScrollPane(this.listTitle);
@@ -192,6 +195,7 @@ public class PanelViewResults extends AbstractPanel {
         this.buttonOpen.addActionListener(actionListener);
         this.buttonOpenAll.addActionListener(actionListener);
         this.buttonRemove.addActionListener(actionListener);
+        this.buttonSearch.addActionListener(actionListener);
     }
 
     /**
@@ -201,13 +205,13 @@ public class PanelViewResults extends AbstractPanel {
     protected void adjustAddComponents() {
         int objWidth = this.width / 2;
         int objHeight = this.height / 3 - 10;
-
         int buttonWidth = this.width / 4;
         int buttonHeight = 30;
 
         this.buttonOpen.setBounds(2, 4, buttonWidth, buttonHeight);
         this.buttonOpenAll.setBounds(buttonWidth + 4, 4, buttonWidth, buttonHeight);
         this.buttonRemove.setBounds(buttonWidth * 2 + 6, 4, buttonWidth, buttonHeight);
+        this.buttonSearch.setBounds(buttonWidth * 3 + 8, 4, buttonWidth, buttonHeight);
 
         this.scrollPane.setBounds(0, 40, this.width, objHeight);
         this.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -219,6 +223,7 @@ public class PanelViewResults extends AbstractPanel {
         this.add(this.buttonRemove);
         this.add(this.buttonOpen);
         this.add(this.buttonOpenAll);
+        this.add(this.buttonSearch);
         this.add(this.scrollPane);
         this.add(this.textAttributes);
         this.add(this.image);

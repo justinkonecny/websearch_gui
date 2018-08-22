@@ -54,44 +54,28 @@ class PanelAttributeEdit extends AbstractPanel {
     }
 
     /**
-     * Updates this panel's search with the integer values parsed from the text fields.
-     */
-    public void updateSearch() {
-        this.search.setPriceMinimum(this.getInteger(this.fieldPriceMinimum.getText(), this.search.getPriceMinimum()));
-        this.search.setPriceMaximum(this.getInteger(this.fieldPriceMaximum.getText(), this.search.getMilesMaximum()));
-        this.search.setYearMinimum(this.getInteger(this.fieldYearMinimum.getText(), this.search.getYearMinimum()));
-        this.search.setMilesMinimum(this.getInteger(this.fieldMilesMinimum.getText(), this.search.getMilesMinimum()));
-        this.search.setMilesMaximum(this.getInteger(this.fieldMilesMaximum.getText(), this.search.getMilesMaximum()));
-    }
-
-    /**
-     * Tries to parse an integer from the given String, returns the defaultInt if the given String is not an integer.
-     *
-     * @param strInt the String to be converted into an integer
-     * @param defaultInt the integer to return otherwise
-     * @return strInt as an integer, or the defaultInt if strInt is not an integer
-     */
-    private int getInteger(String strInt, int defaultInt) {
-        try {
-            int value = Integer.valueOf(strInt);
-            return value;
-        } catch (NumberFormatException e) {
-            return defaultInt;
-        }
-    }
-
-    /**
      * Sets this panels text field's text to their respective values from the given Search.
      *
      * @param search the Search containing the parameters to display in the text fields
      */
-    public void setSearch(Search search) {
+    public void setDisplayedSearch(Search search) {
         this.search = search;
         this.fieldPriceMinimum.setText(String.valueOf(this.search.getPriceMinimum()));
         this.fieldPriceMaximum.setText(String.valueOf(this.search.getPriceMaximum()));
         this.fieldYearMinimum.setText(String.valueOf(this.search.getYearMinimum()));
         this.fieldMilesMinimum.setText(String.valueOf(this.search.getMilesMinimum()));
         this.fieldMilesMaximum.setText(String.valueOf(this.search.getMilesMaximum()));
+    }
+
+    /**
+     * Updates this panel's search with the integer values parsed from the text fields.
+     */
+    public void updateSearchFromTextFields() {
+        this.search.setPriceMinimum(this.getInteger(this.fieldPriceMinimum.getText(), this.search.getPriceMinimum()));
+        this.search.setPriceMaximum(this.getInteger(this.fieldPriceMaximum.getText(), this.search.getMilesMaximum()));
+        this.search.setYearMinimum(this.getInteger(this.fieldYearMinimum.getText(), this.search.getYearMinimum()));
+        this.search.setMilesMinimum(this.getInteger(this.fieldMilesMinimum.getText(), this.search.getMilesMinimum()));
+        this.search.setMilesMaximum(this.getInteger(this.fieldMilesMaximum.getText(), this.search.getMilesMaximum()));
     }
 
     /**
@@ -141,7 +125,29 @@ class PanelAttributeEdit extends AbstractPanel {
         this.add(this.labelYear);
     }
 
+    /**
+     * Tries to parse an integer from the given String, returns the defaultInt if the given String is not an integer.
+     *
+     * @param strInt the String to be converted into an integer
+     * @param defaultInt the integer to return otherwise
+     * @return strInt as an integer, or the defaultInt if strInt is not an integer
+     */
+    private int getInteger(String strInt, int defaultInt) {
+        try {
+            int value = Integer.valueOf(strInt);
+            return value;
+        } catch (NumberFormatException e) {
+            return defaultInt;
+        }
+    }
+
+    /**
+     * Represents a text field to enter search option data.
+     */
     private class AttributeField extends JTextField {
+        /**
+         * Constructs an search attribute text field with the action command "cmd:editattribute"
+         */
         private AttributeField() {
             super();
             this.setActionCommand("cmd:editattribute");

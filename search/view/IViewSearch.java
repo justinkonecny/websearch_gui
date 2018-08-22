@@ -15,21 +15,23 @@ import java.util.List;
 public interface IViewSearch {
 
     /**
-     * Sets the visibility of the model selection gui.
-     *
-     * @param visible whether or not the model selection gui is visible
+     * Displays the model selection gui for the user to select a model to search for.
      */
-    void setModelSelectorVisibility(boolean visible);
-
-    void showAttributeEditor(Search search);
+    void displayModelGUI();
 
     /**
-     * Given a list of Advertisements, sets the visibility of the results gui to the given value
+     * Displays the search option edit gui to alter search parameters.
+     *
+     * @param search the search with parameters to display and edit
+     */
+    void displayOptionsGUI(Search search);
+
+    /**
+     * Displays the results gui with the given list of Advertisement
      *
      * @param advertisements the list of Advertisements to display
-     * @param visible        whether or not the results gui is visible
      */
-    void updateResultsVisibility(List<Advertisement> advertisements, boolean visible);
+    void displayResultsGUI(List<Advertisement> advertisements);
 
     /**
      * Adds the given listeners to the appropriate Components in the view. Used for handling user
@@ -70,5 +72,13 @@ public interface IViewSearch {
      */
     void removeSelectedListing();
 
-    void updateSearch();
+    /**
+     * Updates the view's Search based on user input.
+     */
+    void updateSearchFromInput();
+
+    /**
+     * Hides this view from screen.
+     */
+    void hideFrame();
 }
