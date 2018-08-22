@@ -22,6 +22,7 @@ filtering out irrelevant listings based on certain criteria, including posting l
 -AbstractPanel: abstracted class for the gui panels displayed to the user
 -PanelModelSelector: concrete class that extends AbstractPanel to display the model selection screen to the user
 -PanelViewResults: concrete class that extends AbstractPanel to display the search results screen to the user
+-PanelAttributeEdit: concrete class that extends AbstractPanel to display the search option editor to the user
 
 -IControllerSearch: interface representing the controller to handle user input and program execution (execute search, display results)
 -ControllerSearch: class implementation of the controller (acts as ActionListener, KeyListener, and ListSelectionListener)
