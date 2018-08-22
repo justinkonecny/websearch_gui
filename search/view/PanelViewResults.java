@@ -53,9 +53,9 @@ public class PanelViewResults extends AbstractPanel {
         this.currentImageIndex = 0;
 
         this.advertisements = new ArrayList<Advertisement>();
-        this.buttonOpen = new Button("Open Selection", "open");
-        this.buttonOpenAll = new Button("Open All", "openall");
-        this.buttonRemove = new Button("Remove", "remove");
+        this.buttonOpen = new Button("Open Selection", "cmd:open");
+        this.buttonOpenAll = new Button("Open All", "cmd:openall");
+        this.buttonRemove = new Button("Remove", "cmd:remove");
         this.listModelTitle = new DefaultListModel<String>();
         this.listTitle = new JList<String>(this.listModelTitle);
         this.scrollPane = new JScrollPane(this.listTitle);
@@ -64,7 +64,7 @@ public class PanelViewResults extends AbstractPanel {
         this.textAttributes.setWrapStyleWord(true);
         this.image = new JLabel();
 
-        this.adjustComponentBoundaries();
+        this.adjustAddComponents();
     }
 
     /**
@@ -195,7 +195,7 @@ public class PanelViewResults extends AbstractPanel {
      * Adjusts this panel's components to fit to specific boundaries.
      */
     @Override
-    protected void adjustComponentBoundaries() {
+    protected void adjustAddComponents() {
         int objWidth = this.width / 2;
         int objHeight = this.height / 3 - 10;
 

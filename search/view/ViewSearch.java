@@ -1,6 +1,7 @@
 package search.view;
 
 import search.Advertisement;
+import search.Search;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -17,6 +18,11 @@ public class ViewSearch extends JFrame implements IViewSearch {
     private PanelModelSelector panelModelSelector;
     //the panel to display the search results
     private PanelViewResults panelViewResults;
+
+    private PanelAttributeEdit panelAttributeEdit;
+
+    private Search search;
+
     //the width of the model selection gui
     private int widthModel;
     //the height of the model selection gui
@@ -25,6 +31,9 @@ public class ViewSearch extends JFrame implements IViewSearch {
     private int widthResults;
     //the height of the results gui
     private int heightResults;
+
+    private int widthAttribute;
+    private int heightAttribute;
 
     /**
      * Constructs the interactive view with default sizes for the gui panels.
@@ -35,6 +44,8 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.heightModel = 200;
         this.widthResults = 900;
         this.heightResults = 700;
+        this.widthAttribute = 600;
+        this.heightAttribute = 185;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(this.widthModel, this.heightModel);
@@ -42,6 +53,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
 
         this.panelModelSelector = new PanelModelSelector(this.widthModel, this.heightModel - 30);
         this.panelViewResults = new PanelViewResults(this.widthResults - 15, this.heightResults - 30);
+        this.panelAttributeEdit = new PanelAttributeEdit(this.widthAttribute, this.heightAttribute);
     }
 
     /**
@@ -70,8 +82,12 @@ public class ViewSearch extends JFrame implements IViewSearch {
     }
 
     @Override
-    public void showAttributeEditor() {
-        // TODO
+    public void showAttributeEditor(Search search) {
+        this.search = search;
+        this.panelAttributeEdit.setSearch(search);
+        this.setSize(this.widthAttribute, this.heightAttribute);
+        this.setContentPane(this.panelAttributeEdit);
+        this.setVisible(true);
     }
 
     /**
@@ -90,6 +106,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
             this.panelModelSelector.addActionListener(actionListener);
             this.panelViewResults.addActionListener(actionListener);
             this.panelViewResults.addListeners(listListener, keyListener);
+            this.panelAttributeEdit.addActionListener(actionListener);
         }
     }
 
@@ -136,5 +153,10 @@ public class ViewSearch extends JFrame implements IViewSearch {
     @Override
     public void removeSelectedListing() {
         this.panelViewResults.removeSelectedListing();
+    }
+
+    @Override
+    public void updateSearch() {
+        this.panelAttributeEdit.updateSearch();
     }
 }

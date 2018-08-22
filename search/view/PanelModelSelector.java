@@ -30,7 +30,7 @@ public class PanelModelSelector extends AbstractPanel {
         this.buttonJeep = new Button("Jeep", "jeep");
         this.textModelOther = new JTextField("[Enter Other Model]");
 
-        this.adjustComponentBoundaries();
+        this.adjustAddComponents();
     }
 
     /**
@@ -50,7 +50,7 @@ public class PanelModelSelector extends AbstractPanel {
      * Adjusts this panel's components to fit to specific boundaries.
      */
     @Override
-    protected void adjustComponentBoundaries() {
+    protected void adjustAddComponents() {
         int objPosX = 10;
         int objPosY = this.height / 4;
         int objWidth = this.width - objPosX * 2;

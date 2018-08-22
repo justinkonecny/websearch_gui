@@ -1,6 +1,7 @@
 package search.view;
 
 import search.Advertisement;
+import search.Search;
 
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
@@ -20,13 +21,13 @@ public interface IViewSearch {
      */
     void setModelSelectorVisibility(boolean visible);
 
-    void showAttributeEditor();
+    void showAttributeEditor(Search search);
 
     /**
      * Given a list of Advertisements, sets the visibility of the results gui to the given value
      *
      * @param advertisements the list of Advertisements to display
-     * @param visible whether or not the results gui is visible
+     * @param visible        whether or not the results gui is visible
      */
     void updateResultsVisibility(List<Advertisement> advertisements, boolean visible);
 
@@ -35,8 +36,8 @@ public interface IViewSearch {
      * input from the gui (e.g. clicking buttons, list selections, key presses)
      *
      * @param actionListener the action listener
-     * @param listListener the list selection listener
-     * @param keyListener the key listener
+     * @param listListener   the list selection listener
+     * @param keyListener    the key listener
      */
     void addListeners(ActionListener actionListener, ListSelectionListener listListener, KeyListener keyListener);
 
@@ -68,4 +69,6 @@ public interface IViewSearch {
      * Removes the selected listing from the Advertisements displayed to the user.
      */
     void removeSelectedListing();
+
+    void updateSearch();
 }

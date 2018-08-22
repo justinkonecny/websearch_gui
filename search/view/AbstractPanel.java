@@ -41,7 +41,7 @@ public abstract class AbstractPanel extends JPanel {
     /**
      * Adjusts this panel's components to fit to specific boundaries.
      */
-    protected abstract void adjustComponentBoundaries();
+    protected abstract void adjustAddComponents();
 
     /**
      * Represents a clickable button with a command.

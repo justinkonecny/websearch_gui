@@ -74,38 +74,41 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
      * @param command the command to process
      */
     private void processActionCommand(String command) {
-        if (command.equals("open")) {
+        if (command.equals("cmd:editattribute")){
+            return;
+        } else if (command.equals("cmd:open")) {
             //opens the selected listing
             this.view.openSelected();
-        } else if (command.equals("openall")) {
+        } else if (command.equals("cmd:openall")) {
             //opens all listings
             this.view.openAll();
-        } else if (command.equals("remove")) {
+        } else if (command.equals("cmd:remove")) {
             //removes the selected listing
             this.view.removeSelectedListing();
-        } else {
+        } else if (command.equals("cmd:continue")) {
+            this.view.updateSearch();
             //attempts to execute a search otherwise (post model selection)
-            try {
-                this.executeSearch(command);
-            } catch (IOException exception) {
-                exception.printStackTrace();
-            }
+            this.executeSearch();
+        } else {
+            this.search.setModel(command);
+            this.view.showAttributeEditor(this.search);
         }
     }
 
     /**
      * Calls the model's search execution method, given an updated vehicle model to search for, hides the model
      * selection gui, and prints/displays the search results.
-     *
-     * @param model the updated vehicle model to search for
-     * @throws IOException if the model fails to connect to the search URLs
      */
-    private void executeSearch(String model) throws IOException {
-        this.search.setModel(model);
-        this.view.setModelSelectorVisibility(false);
-        this.advertisementList = this.model.executeSearch(this.search);
-        this.printResults();
-        this.view.updateResultsVisibility(this.advertisementList, true);
+    private void executeSearch() {
+        try {
+            this.view.setModelSelectorVisibility(false);
+            this.advertisementList = this.model.executeSearch(this.search);
+            this.printResults();
+            this.view.updateResultsVisibility(this.advertisementList, true);
+        } catch (IOException e) {
+            System.out.println("[Failed to execute search]");
+            e.printStackTrace();
+        }
     }
 
     /**
