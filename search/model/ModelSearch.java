@@ -56,6 +56,8 @@ public class ModelSearch implements IModelSearch {
                 search.getPriceMinimum(), search.getPriceMaximum(), search.getMilesMinimum(), search.getMilesMaximum()));
         System.out.println("========================================");
 
+        this.advertisements = new ArrayList<Advertisement>();
+
         for (Map.Entry<String, String> entry : search.getSearchLinks().entrySet()) {
             String searchLocation = entry.getKey();
             String searchLink = entry.getValue();

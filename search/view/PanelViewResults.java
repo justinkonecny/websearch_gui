@@ -213,7 +213,7 @@ public class PanelViewResults extends AbstractPanel {
         this.buttonRemove.setBounds(buttonWidth * 2 + 6, 4, buttonWidth, buttonHeight);
         this.buttonSearch.setBounds(buttonWidth * 3 + 8, 4, buttonWidth, buttonHeight);
 
-        this.scrollPane.setBounds(0, 40, this.width, objHeight);
+        this.scrollPane.setBounds(0, 40, this.width + 8, objHeight);
         this.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 

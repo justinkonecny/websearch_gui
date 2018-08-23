@@ -110,8 +110,7 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
             this.printResults();
             this.view.displayResultsGUI(this.advertisementList);
         } catch (IOException e) {
-            System.out.println("[Failed to execute search]");
-            e.printStackTrace();
+            System.out.println("[Failed to execute search]");;
         }
     }
 

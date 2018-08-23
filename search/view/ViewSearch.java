@@ -3,10 +3,14 @@ package search.view;
 import search.Advertisement;
 import search.Search;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -39,7 +43,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
      * Constructs the interactive view with default sizes for the gui panels.
      */
     public ViewSearch() {
-        super("WebSearch");
+        super("Web Car Search");
         this.widthModel = 300;
         this.heightModel = 200;
         this.widthResults = 900;
@@ -50,6 +54,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(this.widthModel, this.heightModel);
         this.setResizable(false);
+        this.setImage();
 
         this.panelModelSelector = new PanelModelSelector(this.widthModel, this.heightModel - 30);
         this.panelViewResults = new PanelViewResults(this.widthResults - 15, this.heightResults - 30);
@@ -74,7 +79,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
     @Override
     public void displayOptionsGUI(Search search) {
         this.search = search;
-        this.panelAttributeEdit.setDisplayedSearch(search);
+        this.panelAttributeEdit.setDisplayedSearch(this.search);
         this.setSize(this.widthAttribute, this.heightAttribute);
         this.setContentPane(this.panelAttributeEdit);
         this.setVisible(true);
@@ -172,5 +177,16 @@ public class ViewSearch extends JFrame implements IViewSearch {
     @Override
     public void hideFrame() {
         this.setVisible(false);
+    }
+
+    /**
+     * Sets the frame icon.
+     */
+    private void setImage() {
+        try {
+            File file = new File("src\\Car.png");
+            BufferedImage image = ImageIO.read(file);
+            this.setIconImage(image);
+        } catch (IOException e) {}
     }
 }
