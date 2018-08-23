@@ -54,7 +54,6 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(this.widthModel, this.heightModel);
         this.setResizable(false);
-        this.setImage();
 
         this.panelModelSelector = new PanelModelSelector(this.widthModel, this.heightModel - 30);
         this.panelViewResults = new PanelViewResults(this.widthResults - 15, this.heightResults - 30);
@@ -177,16 +176,5 @@ public class ViewSearch extends JFrame implements IViewSearch {
     @Override
     public void hideFrame() {
         this.setVisible(false);
-    }
-
-    /**
-     * Sets the frame icon.
-     */
-    private void setImage() {
-        try {
-            File file = new File("src\\Car.png");
-            BufferedImage image = ImageIO.read(file);
-            this.setIconImage(image);
-        } catch (IOException e) {}
     }
 }
