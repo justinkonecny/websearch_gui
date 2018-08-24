@@ -118,6 +118,7 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
      * Prints all search results to the console.
      */
     private void printResults() {
+        System.out.println("[##]:[$Age]: $Title");
         for (int i = 0; i < this.advertisementList.size(); i++) {
             Advertisement ad = advertisementList.get(i);
             System.out.println(String.format("[%02d]:[%02d]: %s", i + 1, ad.getAge(), ad.getTitle()));

@@ -14,10 +14,8 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Represents the model implementation to execute searches and parse the results.
@@ -27,6 +25,8 @@ public class ModelSearch implements IModelSearch {
     private List<Advertisement> advertisements;
     //the oldest acceptable post to include in the results
     private int oldestPostAge;
+    //list of 'known' models to search through for a search of '$all'
+    private List<String> knownModels;
 
     /**
      * Constructs the model with an empty list of Advertisements and sets the oldest
@@ -34,7 +34,36 @@ public class ModelSearch implements IModelSearch {
      */
     public ModelSearch() {
         this.advertisements = new ArrayList<Advertisement>();
+        this.knownModels = new ArrayList<String>(Arrays.asList("bmw", "mercedes", "wrangler"));
         this.oldestPostAge = 14;
+    }
+
+    /**
+     * Executes the given Search and returns the resulting listings, checking for the selected model.
+     *
+     * @param search the Search containing all parameters desired in the results
+     * @return the list of Advertisements found matching the search parameters
+     * @throws IOException if the search URLS cannot be opened or the web page cannot be accessed
+     * @throws IllegalArgumentException if the given Search is null
+     */
+    @Override
+    public List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException {
+        this.advertisements = new ArrayList<Advertisement>();
+        if (search.getModel().toLowerCase().equals("$all")) {
+            for (String model : this.knownModels) {
+                search.setModel(model);
+                List<Advertisement> adList = this.conductSearch(search);
+                this.advertisements.addAll(adList);
+            }
+            System.out.println("[All Found]: " + this.advertisements.size());
+            System.out.println("========================================");
+            search.setModel("$all");
+        } else {
+            this.advertisements = this.conductSearch(search);
+        }
+
+        this.populateAdvertisements();
+        return this.advertisements;
     }
 
     /**
@@ -45,8 +74,7 @@ public class ModelSearch implements IModelSearch {
      * @throws IOException if the search URLS cannot be opened or the web page cannot be accessed
      * @throws IllegalArgumentException if the given Search is null
      */
-    @Override
-    public List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException {
+    private List<Advertisement> conductSearch(Search search) throws IOException, IllegalArgumentException {
         if (search == null) {
             throw new IllegalArgumentException("Search cannot be null");
         }
@@ -56,7 +84,7 @@ public class ModelSearch implements IModelSearch {
                 search.getPriceMinimum(), search.getPriceMaximum(), search.getMilesMinimum(), search.getMilesMaximum()));
         System.out.println("========================================");
 
-        this.advertisements = new ArrayList<Advertisement>();
+        List<Advertisement> listAdvertisement = new ArrayList<Advertisement>();
 
         for (Map.Entry<String, String> entry : search.getSearchLinks().entrySet()) {
             String searchLocation = entry.getKey();
@@ -86,7 +114,7 @@ public class ModelSearch implements IModelSearch {
                     advertisement.setLocation(adLocation);
                     advertisement.setAge(adAge);
                     advertisement.setLink(adLink);
-                    this.advertisements.add(advertisement);
+                    listAdvertisement.add(advertisement);
                 }
                 countTotal++;
             }
@@ -96,13 +124,12 @@ public class ModelSearch implements IModelSearch {
             System.out.println("========================================");
         }
 
-        System.out.println("[Combined Total Found]: " + this.advertisements.size());
+        System.out.println("[Combined Total Found]: " + listAdvertisement.size());
         System.out.println("========================================");
 
-        this.removeDuplicates(this.advertisements);
-        this.populateAdvertisements();
+        this.removeDuplicates(listAdvertisement);
 
-        return this.advertisements;
+        return listAdvertisement;
     }
 
     /**
@@ -177,7 +204,7 @@ public class ModelSearch implements IModelSearch {
                     listUnique.add(listOrig.get(i).getTitle().toLowerCase());
                 }
             }
-            System.out.println("[Total Listings Remaining]: " + this.advertisements.size());
+            System.out.println("[Total Listings Remaining]: " + listAds.size());
             System.out.println("========================================");
         }
     }
