@@ -55,11 +55,12 @@ public class PanelModelSelector extends AbstractPanel {
         int objPosY = this.height / 4;
         int objWidth = this.width - objPosX * 2;
         int objHeight = objPosY - 8;
+        int space = 4;
 
-        this.buttonBmw.setBounds(objPosX, 0,objWidth, objHeight);
-        this.buttonMercedes.setBounds(objPosX, objPosY, objWidth, objHeight);
-        this.buttonJeep.setBounds(objPosX, objPosY * 2, objWidth, objHeight);
-        this.textModelOther.setBounds(objPosX, objPosY * 3, objWidth, objHeight);
+        this.buttonBmw.setBounds(objPosX, space,objWidth, objHeight);
+        this.buttonMercedes.setBounds(objPosX, objHeight + (space * 2), objWidth, objHeight);
+        this.buttonJeep.setBounds(objPosX, objHeight * 2 + (space * 3), objWidth, objHeight);
+        this.textModelOther.setBounds(objPosX, objHeight * 3 + (space * 4), objWidth, objHeight);
 
         this.add(this.buttonBmw);
         this.add(this.buttonMercedes);

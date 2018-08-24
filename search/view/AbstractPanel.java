@@ -28,6 +28,7 @@ public abstract class AbstractPanel extends JPanel {
             this.width = width - 15;
             this.height = height;
             this.setLayout(null);
+            this.setBackground(Color.WHITE);
         }
     }
 

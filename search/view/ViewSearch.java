@@ -3,14 +3,10 @@ package search.view;
 import search.Advertisement;
 import search.Search;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -56,7 +52,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.setResizable(false);
 
         this.panelModelSelector = new PanelModelSelector(this.widthModel, this.heightModel - 30);
-        this.panelViewResults = new PanelViewResults(this.widthResults - 15, this.heightResults - 30);
+        this.panelViewResults = new PanelViewResults(this.widthResults - 10, this.heightResults - 30);
         this.panelAttributeEdit = new PanelAttributeEdit(this.widthAttribute, this.heightAttribute);
     }
 

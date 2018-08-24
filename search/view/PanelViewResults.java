@@ -51,6 +51,8 @@ public class PanelViewResults extends AbstractPanel {
      */
     public PanelViewResults(int width, int height) {
         super(width, height);
+
+        this.setBackground(Color.WHITE);
         this.currentListingIndex = 0;
         this.currentImageIndex = 0;
 
@@ -207,13 +209,14 @@ public class PanelViewResults extends AbstractPanel {
         int objHeight = this.height / 3 - 10;
         int buttonWidth = this.width / 4;
         int buttonHeight = 30;
+        int space = 2;
 
-        this.buttonOpen.setBounds(2, 4, buttonWidth, buttonHeight);
-        this.buttonOpenAll.setBounds(buttonWidth + 4, 4, buttonWidth, buttonHeight);
-        this.buttonRemove.setBounds(buttonWidth * 2 + 6, 4, buttonWidth, buttonHeight);
-        this.buttonSearch.setBounds(buttonWidth * 3 + 8, 4, buttonWidth, buttonHeight);
+        this.buttonOpen.setBounds(space, 4, buttonWidth, buttonHeight);
+        this.buttonOpenAll.setBounds(buttonWidth + (space * 2), 4, buttonWidth, buttonHeight);
+        this.buttonRemove.setBounds(buttonWidth * 2 + (space * 3), 4, buttonWidth, buttonHeight);
+        this.buttonSearch.setBounds(buttonWidth * 3 + (space * 4), 4, buttonWidth, buttonHeight);
 
-        this.scrollPane.setBounds(0, 40, this.width + 8, objHeight);
+        this.scrollPane.setBounds(space, buttonHeight + (space * 4), (buttonWidth * 4) + (space * 3), objHeight);
         this.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 

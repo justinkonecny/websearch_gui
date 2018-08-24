@@ -3,6 +3,7 @@ package search.view;
 import search.Search;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
