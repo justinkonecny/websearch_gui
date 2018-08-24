@@ -50,6 +50,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(this.widthModel, this.heightModel);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
 
         this.panelModelSelector = new PanelModelSelector(this.widthModel, this.heightModel - 30);
         this.panelViewResults = new PanelViewResults(this.widthResults - 10, this.heightResults - 30);
