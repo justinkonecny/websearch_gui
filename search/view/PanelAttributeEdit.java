@@ -3,6 +3,7 @@ package search.view;
 import search.Search;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
 
 /**
@@ -151,6 +152,7 @@ class PanelAttributeEdit extends AbstractPanel {
         private AttributeField() {
             super();
             this.setActionCommand("cmd:editattribute");
+            this.setBackground(new Color(250, 245, 240));
         }
     }
 }

@@ -25,7 +25,7 @@ public class Search {
      * Constructs a Search with default search parameters
      */
     public Search() {
-        this("bmw", 5000, 9000, 50000, 85000, 2008);
+        this("bmw", 5000, 13000, 50000, 85000, 2008);
         this.adjustSearchParameters();
     }
 
@@ -63,32 +63,30 @@ public class Search {
      * @return the map of search urls
      */
     public Map<String, String> getSearchLinks() {
+        String url = "https://%s.craigslist.org/search/cto?auto_transmission=2&hasPic=1&min_price=%d"
+                + "&max_auto_miles=%d&max_price=%d&auto_make_model=%s&min_auto_miles=%d"
+                + "&min_auto_year=%d&auto_title_status=1";
+
         //northern new jersey search link
-        String url_nnj = String.format("https://newjersey.craigslist.org/search/cto?auto_transmission=2&hasPic=1&min_price=%s"
-                        + "&max_auto_miles=%s&max_price=%s&auto_make_model=%s&min_auto_miles=%s"
-                        + "&min_auto_year=%s&auto_title_status=1", String.valueOf(this.priceMinimum),
-                String.valueOf(this.milesMaximum), String.valueOf(this.priceMaximum), this.model,
-                String.valueOf(this.milesMinimum), String.valueOf(this.yearMinimum));
+        String url_nnj = String.format(url, "newjersey", this.priceMinimum,
+                this.milesMaximum, this.priceMaximum, this.model,
+                this.milesMinimum, this.yearMinimum);
 
         //central new jersey search link
-        String url_cnj = String.format("https://cnj.craigslist.org/search/cto?auto_transmission=2&hasPic=1&min_price=%s"
-                        + "&max_auto_miles=%s&max_price=%s&auto_make_model=%s&min_auto_miles=%s"
-                        + "&min_auto_year=%s&auto_title_status=1", String.valueOf(this.priceMinimum),
-                String.valueOf(this.milesMaximum), String.valueOf(this.priceMaximum), this.model,
-                String.valueOf(this.milesMinimum), String.valueOf(this.yearMinimum));
+        String url_cnj = String.format(url, "cnj", this.priceMinimum,
+                this.milesMaximum, this.priceMaximum, this.model,
+                this.milesMinimum, this.yearMinimum);
 
         //southern new jersey search link
-        String url_snj = String.format("https://southjersey.craigslist.org/search/cto?auto_transmission=2&hasPic=1&min_price=%s"
-                        + "&max_auto_miles=%s&max_price=%s&auto_make_model=%s&min_auto_miles=%s"
-                        + "&min_auto_year=%s&auto_title_status=1", String.valueOf(this.priceMinimum),
-                String.valueOf(this.milesMaximum), String.valueOf(this.priceMaximum), this.model,
-                String.valueOf(this.milesMinimum), String.valueOf(this.yearMinimum));
+        String url_snj = String.format(url, "southjersey", this.priceMinimum,
+                this.milesMaximum, this.priceMaximum, this.model,
+                this.milesMinimum, this.yearMinimum);
 
         //map of search urls
         Map<String, String> urls = new HashMap<String, String>();
-        urls.put("nnj", url_nnj);
+        urls.put("newjersey", url_nnj);
         urls.put("cnj", url_cnj);
-        urls.put("snj", url_snj);
+        urls.put("southjersey", url_snj);
 
         return urls;
     }
@@ -97,6 +95,12 @@ public class Search {
      * Mutates this Search's parameters based on the current set model to create consistent search parameters.
      */
     private void adjustSearchParameters() {
+        if (this.model.equals("mercedes") || this.model.equals("mb")
+                || this.model.equals("mercedes benz") || this.model.equals("benz")) {
+            //search criteria for mercedes-benz
+            this.model = "mercedes";
+        }
+
         if (this.model.equals("bmw") || this.model.equals("bimmer")) {
             //search criteria for bmw
             this.model = "bmw";
@@ -105,15 +109,12 @@ public class Search {
             this.milesMinimum = 50000;
             this.milesMaximum = 80000;
             this.yearMinimum = 2009;
-        } else if (this.model.equals("mercedes") || this.model.equals("mb")
-                || this.model.equals("mercedes benz") || this.model.equals("benz")) {
-            //search criteria for mercedes-benz
-            this.model = "mercedes";
+        } else if (this.model.equals("mercedes") || this.model.equals("infiniti") || this.model.equals("lexus")) {
             this.priceMinimum = 6000;
             this.priceMaximum = 14000;
             this.milesMinimum = 50000;
             this.milesMaximum = 80000;
-            this.yearMinimum = 2008;
+            this.yearMinimum = 2009;
         } else if (this.model.equals("jeep") || this.model.equals("jw")
                 || this.model.equals("jeep wrangler") || this.model.equals("wrangler")) {
             //search criteria for mercedes-benz

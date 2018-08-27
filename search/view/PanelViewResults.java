@@ -205,9 +205,9 @@ public class PanelViewResults extends AbstractPanel {
      */
     @Override
     protected void adjustAddComponents() {
-        int objWidth = this.width / 2;
+        int objWidth = this.width / 2 - 4;
         int objHeight = this.height / 3 - 10;
-        int buttonWidth = this.width / 4;
+        int buttonWidth = this.width / 4 - 4;
         int buttonHeight = 30;
         int space = 2;
 

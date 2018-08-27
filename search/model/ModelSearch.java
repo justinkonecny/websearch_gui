@@ -27,6 +27,8 @@ public class ModelSearch implements IModelSearch {
     private int oldestPostAge;
     //list of 'known' models to search through for a search of '$all'
     private List<String> knownModels;
+    //list of 'suv' models to search through for a search of '$suv'
+    private List<String> suvModels;
 
     /**
      * Constructs the model with an empty list of Advertisements and sets the oldest
@@ -35,6 +37,7 @@ public class ModelSearch implements IModelSearch {
     public ModelSearch() {
         this.advertisements = new ArrayList<Advertisement>();
         this.knownModels = new ArrayList<String>(Arrays.asList("bmw", "mercedes", "wrangler"));
+        this.suvModels = new ArrayList<String>(Arrays.asList("mercedes", "infiniti", "lexus"));
         this.oldestPostAge = 14;
     }
 
@@ -50,20 +53,33 @@ public class ModelSearch implements IModelSearch {
     public List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException {
         this.advertisements = new ArrayList<Advertisement>();
         if (search.getModel().toLowerCase().equals("$all")) {
-            for (String model : this.knownModels) {
-                search.setModel(model);
-                List<Advertisement> adList = this.conductSearch(search);
-                this.advertisements.addAll(adList);
-            }
-            System.out.println("[All Found]: " + this.advertisements.size());
-            System.out.println("========================================");
-            search.setModel("$all");
+            this.searchList(this.knownModels, search);
+        } else if (search.getModel().toLowerCase().equals("$suv")) {
+            this.searchList(this.suvModels, search);
         } else {
             this.advertisements = this.conductSearch(search);
         }
 
-        this.populateAdvertisements();
+        this.populateAdvertisements(false);
         return this.advertisements;
+    }
+
+    /**
+     * Searches all models in the given list with the criteria of the given Search.
+     *
+     * @param listModels the list of String representing all models to search for
+     * @param search the search with search options
+     * @throws IOException if the given Search is null
+     */
+    private void searchList(List<String> listModels, Search search) throws IOException {
+        for (String model : listModels) {
+            search.setModel(model);
+            List<Advertisement> adList = this.conductSearch(search);
+            this.advertisements.addAll(adList);
+        }
+        System.out.println("[All Found]: " + this.advertisements.size());
+        System.out.println("========================================");
+        search.setModel("bmw");
     }
 
     /**
@@ -135,23 +151,31 @@ public class ModelSearch implements IModelSearch {
     /**
      * Connects to the URL of each Advertisement to save the listing images and attributes.
      *
+     * @param getAllImages whether or not to processes all advertisement images or just the first
      * @throws IOException if the advertisement link cannot be connect to
      */
-    private void populateAdvertisements() throws IOException {
+    private void populateAdvertisements(boolean getAllImages) throws IOException {
         for (Advertisement advertisement : this.advertisements) {
+            System.out.println("[Processing]: " + advertisement.getTitle());
             String adLink = advertisement.getLink();
             Document adSoup = Jsoup.connect(adLink).get();
             List<Image> adImageList = new ArrayList<Image>();
             Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
+
             for (Element thumb : adThumbs) {
-                URL thumbUrl = new URL(thumb.attr("href"));
                 try {
+                    URL thumbUrl = new URL(thumb.attr("href"));
                     Image image = ImageIO.read(thumbUrl);
                     adImageList.add(image);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                if (!getAllImages) {
+                    break;
+                }
             }
+
             Element adBodyHtml = adSoup.getElementsByTag("section").select("[id=postingbody]").first();
             String adBody = adBodyHtml.ownText();
             Elements attrs = adSoup.getElementsByTag("p").select(".attrgroup");
@@ -169,6 +193,32 @@ public class ModelSearch implements IModelSearch {
             advertisement.setImages(adImageList);
             advertisement.setBody(adBody);
         }
+        System.out.println("========================================");
+    }
+
+    /**
+     * Populates this Advertisement with all listing images.
+     *
+     * @param advertisement the advertisement to update the images of
+     * @throws IOException if a connection to the advertisement url cannot be made
+     */
+    private void populateImages(Advertisement advertisement) throws IOException {
+        System.out.println("[Processing]: " + advertisement.getTitle());
+        String adLink = advertisement.getLink();
+        Document adSoup = Jsoup.connect(adLink).get();
+        List<Image> adImageList = new ArrayList<Image>();
+        Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
+
+        for (Element thumb : adThumbs) {
+            try {
+                URL thumbUrl = new URL(thumb.attr("href"));
+                Image image = ImageIO.read(thumbUrl);
+                adImageList.add(image);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        advertisement.setImages(adImageList);
     }
 
     /**

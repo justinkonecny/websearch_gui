@@ -5,6 +5,7 @@ import search.Search;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -41,18 +42,19 @@ public class ViewSearch extends JFrame implements IViewSearch {
     public ViewSearch() {
         super("Web Car Search");
         this.widthModel = 300;
-        this.heightModel = 200;
+        this.heightModel = 250;
         this.widthResults = 900;
         this.heightResults = 700;
         this.widthAttribute = 600;
         this.heightAttribute = 185;
 
+        this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(this.widthModel, this.heightModel);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
 
-        this.panelModelSelector = new PanelModelSelector(this.widthModel, this.heightModel - 30);
+        this.panelModelSelector = new PanelModelSelector(this.widthModel, this.heightModel);
         this.panelViewResults = new PanelViewResults(this.widthResults - 10, this.heightResults - 30);
         this.panelAttributeEdit = new PanelAttributeEdit(this.widthAttribute, this.heightAttribute);
     }
@@ -64,6 +66,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
     public void displayModelGUI() {
         this.setSize(this.widthModel, this.heightModel);
         this.setContentPane(this.panelModelSelector);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -78,6 +81,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.panelAttributeEdit.setDisplayedSearch(this.search);
         this.setSize(this.widthAttribute, this.heightAttribute);
         this.setContentPane(this.panelAttributeEdit);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 
@@ -91,6 +95,7 @@ public class ViewSearch extends JFrame implements IViewSearch {
         this.panelViewResults.populateResults(advertisements);
         this.setSize(this.widthResults, this.heightResults);
         this.setContentPane(this.panelViewResults);
+        this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
 

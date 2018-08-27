@@ -25,10 +25,11 @@ public abstract class AbstractPanel extends JPanel {
         if (width < 1 || height < 1) {
             throw new IllegalArgumentException("Width and height must be positive");
         } else {
-            this.width = width - 15;
+            this.width = width;
             this.height = height;
             this.setLayout(null);
             this.setBackground(Color.WHITE);
+            this.setSize(this.width, this.height);
         }
     }
 
@@ -58,7 +59,7 @@ public abstract class AbstractPanel extends JPanel {
         protected Button(String name, String command) {
             super(name);
             this.setActionCommand(command);
-            this.setBackground(Color.WHITE);
+            this.setBackground(new Color(240, 238, 236));
         }
     }
 }
