@@ -1,27 +1,32 @@
-Sample Console Output:
-
-[Search Parameters]: [model: bmw], [min year: 2009]
-  [min price: 5000], [max price: 9000], [min miles: 50000], [max miles: 80000]
+[Search Parameters]: [model: infiniti], [min year: 2009]
+  [min price: 6000], [max price: 14000], [min miles: 50000], [max miles: 80000]
 ========================================
-[Parsing]: BMW NNJ
-[Total Listings Found]: 24
+[Parsing]: INFINITI NEWJERSEY
+[Total Listings Found]: 8
+[Valid Listings Found]: 5
+========================================
+[Parsing]: INFINITI CNJ
+[Total Listings Found]: 9
 [Valid Listings Found]: 6
 ========================================
-[Parsing]: BMW CNJ
-[Total Listings Found]: 24
-[Valid Listings Found]: 6
+[Parsing]: INFINITI SOUTHJERSEY
+[Total Listings Found]: 2
+[Valid Listings Found]: 2
 ========================================
-[Parsing]: BMW SNJ
-[Total Listings Found]: 1
-[Valid Listings Found]: 0
-========================================
-[Combined Total Found]: 12
+[Combined Total Found]: 13
 ========================================
 [Removing Duplicate Listings]
 [Total Listings Remaining]: 5
 ========================================
-[01]:[00]: 2009 BMW 328XI Excellent Condition Low Mileage Clean Carfax
-[02]:[04]: 2010 BMW 528i Xdrive AWD, Navigation! Only 80k Miles!
-[03]:[04]: 2010 BMW 528i Xdrive AWD, Navigation Only 80k Miles
-[04]:[06]: 2010 BMW 528i Xdrive AWD, Navigation
-[05]:[09]: 2010 Bmw 528i Xdrive AWD, Navigation Only 79k Miles
+[Processing]: 2012 G25X SEDAN 4 DOORS 71 MILES SALVAGE HISTORY CLEAN TITLE
+[Processing]: 2013 Infiniti G37S Sport 4dr Clean Title Clean Carfax 57k Miles
+[Processing]: Infiniti G37x Coupe
+[Processing]: 2011 Infiniti G37x AWD
+[Processing]: Infinit G37x Fully Loaded Leather/Navigation, Low Miles, Clean Title
+========================================
+[##]:[$Age]: $Title
+[01]:[14]: 2012 G25X SEDAN 4 DOORS 71 MILES SALVAGE HISTORY CLEAN TITLE
+[02]:[02]: 2013 Infiniti G37S Sport 4dr Clean Title Clean Carfax 57k Miles
+[03]:[03]: Infiniti G37x Coupe
+[04]:[04]: 2011 Infiniti G37x AWD
+[05]:[02]: Infinit G37x Fully Loaded Leather/Navigation, Low Miles, Clean Title
