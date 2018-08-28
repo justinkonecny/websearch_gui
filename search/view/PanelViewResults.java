@@ -84,6 +84,7 @@ public class PanelViewResults extends AbstractPanel {
             Advertisement ad = this.advertisements.get(this.currentListingIndex);
 
             this.textAttributes.setText(ad.getAttributes());
+            this.textAttributes.append("Days Since Posting: " + ad.getAge() + System.lineSeparator());
             if (ad.getPrice() > 1000) {
                 this.textAttributes.append("Price: $" + ad.getPrice() + System.lineSeparator());
             }
