@@ -32,6 +32,8 @@ public class PanelViewResults extends AbstractPanel {
     private JButton buttonRemove;
     //the button to start a new search
     private JButton buttonSearch;
+    //the button to load listing images
+    private JButton buttonLoadImages;
     //the scroll pane to contain the listings
     private JScrollPane scrollPane;
     //the text area to display the listing description/body
@@ -61,12 +63,11 @@ public class PanelViewResults extends AbstractPanel {
         this.buttonOpenAll = new Button("Open All", "cmd:openall");
         this.buttonRemove = new Button("Remove", "cmd:remove");
         this.buttonSearch = new Button("New Search", "cmd:newsearch");
+        this.buttonLoadImages = new Button("Load Images", "cmd:loadimages");
         this.listModelTitle = new DefaultListModel<String>();
         this.listTitle = new JList<String>(this.listModelTitle);
         this.scrollPane = new JScrollPane(this.listTitle);
         this.textAttributes = new JTextArea();
-        this.textAttributes.setLineWrap(true);
-        this.textAttributes.setWrapStyleWord(true);
         this.image = new JLabel();
 
         this.adjustAddComponents();
@@ -145,6 +146,13 @@ public class PanelViewResults extends AbstractPanel {
     }
 
     /**
+     * Returns the index of the current displayed Advertisement.
+     */
+    public int getCurrentIndex() {
+        return this.currentListingIndex;
+    }
+
+    /**
      * Opens the link of the selected Advertisement in the system's default web browser.
      */
     public void openSelected() {
@@ -201,6 +209,7 @@ public class PanelViewResults extends AbstractPanel {
         this.buttonOpenAll.addActionListener(actionListener);
         this.buttonRemove.addActionListener(actionListener);
         this.buttonSearch.addActionListener(actionListener);
+        this.buttonLoadImages.addActionListener(actionListener);
     }
 
     /**
@@ -210,16 +219,20 @@ public class PanelViewResults extends AbstractPanel {
     protected void adjustAddComponents() {
         int objWidth = this.width / 2 - 4;
         int objHeight = this.height / 3 - 10;
-        int buttonWidth = this.width / 4 - 4;
+        int buttonWidth = this.width / 5 - 4;
         int buttonHeight = 30;
         int space = 2;
+
+        this.textAttributes.setLineWrap(true);
+        this.textAttributes.setWrapStyleWord(true);
 
         this.buttonOpen.setBounds(space, 4, buttonWidth, buttonHeight);
         this.buttonOpenAll.setBounds(buttonWidth + (space * 2), 4, buttonWidth, buttonHeight);
         this.buttonRemove.setBounds(buttonWidth * 2 + (space * 3), 4, buttonWidth, buttonHeight);
         this.buttonSearch.setBounds(buttonWidth * 3 + (space * 4), 4, buttonWidth, buttonHeight);
+        this.buttonLoadImages.setBounds(buttonWidth * 4 + (space * 5), 4, buttonWidth, buttonHeight);
 
-        this.scrollPane.setBounds(space, buttonHeight + (space * 4), (buttonWidth * 4) + (space * 3), objHeight);
+        this.scrollPane.setBounds(space, buttonHeight + (space * 4), (buttonWidth * 5) + (space * 3), objHeight);
         this.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 
@@ -230,6 +243,7 @@ public class PanelViewResults extends AbstractPanel {
         this.add(this.buttonOpen);
         this.add(this.buttonOpenAll);
         this.add(this.buttonSearch);
+        this.add(this.buttonLoadImages);
         this.add(this.scrollPane);
         this.add(this.textAttributes);
         this.add(this.image);

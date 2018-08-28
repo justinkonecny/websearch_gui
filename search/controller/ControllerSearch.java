@@ -92,6 +92,9 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
         } else if (command.equals("cmd:newsearch")) {
             //displays the model selection gui to restart searching
             this.view.displayModelGUI();
+        } else if (command.equals("cmd:loadimages")) {
+            //updates the selected Advertisement
+            this.updateImages();
         } else {
             //otherwise input from model selection gui
             this.search.setModel(command);
@@ -111,6 +114,18 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
             this.view.displayResultsGUI(this.advertisementList);
         } catch (IOException e) {
             System.out.println("[Failed to execute search]");;
+        }
+    }
+
+    /**
+     * Updates the selected Advertisement's images.
+     */
+    private void updateImages() {
+        try {
+            Advertisement ad = this.advertisementList.get(this.view.getCurrentAdvertisement());
+            ad.setImages(this.model.getImages(ad));
+        } catch (IOException e) {
+            System.out.println("[Failed to load images]");
         }
     }
 

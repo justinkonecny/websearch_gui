@@ -120,6 +120,14 @@ public class ViewSearch extends JFrame implements IViewSearch {
     }
 
     /**
+     * Returns the current displayed Advertisement.
+     */
+    @Override
+    public int getCurrentAdvertisement() {
+        return this.panelViewResults.getCurrentIndex();
+    }
+
+    /**
      * Opens the currently selected listing in the system's default web browser.
      */
     @Override

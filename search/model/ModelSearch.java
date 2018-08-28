@@ -204,13 +204,8 @@ public class ModelSearch implements IModelSearch {
         System.out.println("========================================");
     }
 
-    /**
-     * Populates this Advertisement with all listing images.
-     *
-     * @param advertisement the advertisement to update the images of
-     * @throws IOException if a connection to the advertisement url cannot be made
-     */
-    private void populateImages(Advertisement advertisement) throws IOException {
+    @Override
+    public List<Image> getImages(Advertisement advertisement) throws IOException {
         System.out.println("[Processing]: " + advertisement.getTitle());
         String adLink = advertisement.getLink();
         Document adSoup = Jsoup.connect(adLink).get();
@@ -226,7 +221,7 @@ public class ModelSearch implements IModelSearch {
                 e.printStackTrace();
             }
         }
-        advertisement.setImages(adImageList);
+        return adImageList;
     }
 
     /**

@@ -3,6 +3,7 @@ package search.model;
 import search.Search;
 import search.Advertisement;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface IModelSearch {
      * @throws IllegalArgumentException if the given Search is null
      */
     List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException;
+
+    List<Image> getImages(Advertisement advertisement) throws IOException;
 }

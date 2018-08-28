@@ -81,4 +81,9 @@ public interface IViewSearch {
      * Hides this view from screen.
      */
     void hideFrame();
+
+    /**
+     * Returns the current displayed Advertisement.
+     */
+    int getCurrentAdvertisement();
 }
