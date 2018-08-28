@@ -82,8 +82,11 @@ public class PanelViewResults extends AbstractPanel {
             this.currentListingIndex = (index >= 0) ? index : 0;
             Advertisement ad = this.advertisements.get(this.currentListingIndex);
 
-            this.textAttributes.setText(ad.getAttributes() + System.lineSeparator());
-            this.textAttributes.append(ad.getBody());
+            this.textAttributes.setText(ad.getAttributes());
+            if (ad.getPrice() > 1000) {
+                this.textAttributes.append("Price: $" + ad.getPrice() + System.lineSeparator());
+            }
+            this.textAttributes.append(System.lineSeparator() + ad.getBody());
 
             if (ad.getImages().size() > 0) {
                 this.image.setIcon(new ImageIcon(ad.getImages().get(this.currentImageIndex)));

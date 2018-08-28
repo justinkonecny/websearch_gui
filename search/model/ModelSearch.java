@@ -8,6 +8,7 @@ import search.Advertisement;
 import search.Search;
 
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.NumberUp;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -122,6 +123,7 @@ public class ModelSearch implements IModelSearch {
                         Integer.valueOf(adDate[1]), Integer.valueOf(adDate[2]));
                 String adLink = adHtml.getElementsByTag("a").attr("href");
                 String adLocation = adLink.split("\\.")[0].split("//")[1];
+                String adPrice = adHtml.select("span.result-price").first().text().substring(1);
 
                 if (adAge <= this.oldestPostAge && adLocation != "newyork" && adLocation != "philadelphia") {
                     countValid++;
@@ -131,6 +133,12 @@ public class ModelSearch implements IModelSearch {
                     advertisement.setAge(adAge);
                     advertisement.setLink(adLink);
                     listAdvertisement.add(advertisement);
+
+                    try {
+                        advertisement.setPrice(Integer.valueOf(adPrice));
+                    } catch (NumberFormatException e) {
+                        System.out.println("[Could not get price for]: " + adTitle);
+                    }
                 }
                 countTotal++;
             }
