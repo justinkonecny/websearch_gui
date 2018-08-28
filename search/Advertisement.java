@@ -23,9 +23,11 @@ public class Advertisement {
     private List<Image> imageList;
     //the listing's provided description
     private String body;
+    //the listing's price
+    private int price;
 
     /**
-     * Constructs an Advertisement and initializes the fields (i.e. title = "title")
+     * Constructs an Advertisement and initializes the fields (i.e. title = "title").
      */
     public Advertisement() {
         this.title = "title";
@@ -34,11 +36,12 @@ public class Advertisement {
         this.attributes = "attributes";
         this.body = "";
         this.age = 0;
+        this.price = 0;
         this.imageList = new ArrayList<Image>();
     }
 
     /**
-     * Set's this Advertisment's title to the given value
+     * Set's this Advertisment's title to the given value.
      *
      * @param title the new title
      */
@@ -47,7 +50,7 @@ public class Advertisement {
     }
 
     /**
-     * Sets this Advertisement's location to the given value
+     * Sets this Advertisement's location to the given value.
      *
      * @param location the new location
      */
@@ -56,7 +59,7 @@ public class Advertisement {
     }
 
     /**
-     * Sets this Advertisement's age to the given value
+     * Sets this Advertisement's age to the given value.
      *
      * @param age the number of days since posted
      */
@@ -65,7 +68,7 @@ public class Advertisement {
     }
 
     /**
-     * Sets this Advertisement's URL to the given value
+     * Sets this Advertisement's URL to the given value.
      *
      * @param link the new URL
      */
@@ -74,7 +77,7 @@ public class Advertisement {
     }
 
     /**
-     * Sets this Advertisements attribute description to the given value
+     * Sets this Advertisements attribute description to the given value.
      *
      * @param attributes the new description of attributes
      */
@@ -83,7 +86,7 @@ public class Advertisement {
     }
 
     /**
-     * Sets this Advertisement's list of images to the given list
+     * Sets this Advertisement's list of images to the given list.
      *
      * @param imageList the new list of images
      */
@@ -92,7 +95,7 @@ public class Advertisement {
     }
 
     /**
-     * Set's this Advertisement's description to the given value
+     * Set's this Advertisement's description to the given value.
      *
      * @param body the new body/description
      */
@@ -101,7 +104,16 @@ public class Advertisement {
     }
 
     /**
-     * Returns this Advertisement's title
+     * Set's this Advertisement's price to the given value.
+     *
+     * @param price the new price
+     */
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    /**
+     * Returns this Advertisement's title.
      *
      * @return the title
      */
@@ -110,7 +122,7 @@ public class Advertisement {
     }
 
     /**
-     * Returns this Advertisement's location
+     * Returns this Advertisement's location.
      *
      * @return the location
      */
@@ -119,7 +131,7 @@ public class Advertisement {
     }
 
     /**
-     * Returns this advertisement's URL
+     * Returns this advertisement's URL.
      *
      * @return the URL
      */
@@ -128,7 +140,7 @@ public class Advertisement {
     }
 
     /**
-     * Returns this Advertisement's attribute description
+     * Returns this Advertisement's attribute description.
      *
      * @return the attributes
      */
@@ -137,7 +149,7 @@ public class Advertisement {
     }
 
     /**
-     * Returns the number of days since this Advertisement was posted
+     * Returns the number of days since this Advertisement was posted.
      *
      * @return the age
      */
@@ -146,7 +158,7 @@ public class Advertisement {
     }
 
     /**
-     * Returns this Advertisement's list of images
+     * Returns this Advertisement's list of images.
      *
      * @return the list of images
      */
@@ -155,11 +167,20 @@ public class Advertisement {
     }
 
     /**
-     * Returns this Advertisements's description
+     * Returns this Advertisements's description.
      *
      * @return the body/description
      */
     public String getBody() {
         return this.body;
+    }
+
+    /**
+     * Returns this Advertisement's price.
+     *
+     * @return the price
+     */
+    public int getPrice() {
+        return this.price;
     }
 }
