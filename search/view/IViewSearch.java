@@ -4,6 +4,7 @@ import search.Advertisement;
 import search.Search;
 
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -85,5 +86,10 @@ public interface IViewSearch {
     /**
      * Returns the current displayed Advertisement.
      */
-    int getCurrentAdvertisement();
+    Advertisement getCurrentAdvertisement();
+
+    /**
+     * Updates the current selected listing with the given list of images.
+     */
+    void updateSelectionImages(List<Image> listImages);
 }

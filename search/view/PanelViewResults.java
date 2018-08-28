@@ -145,11 +145,19 @@ public class PanelViewResults extends AbstractPanel {
         this.listTitle.addKeyListener(keyListener);
     }
 
+
     /**
-     * Returns the index of the current displayed Advertisement.
+     * Updates the current selected listing with the given list of images.
      */
-    public int getCurrentIndex() {
-        return this.currentListingIndex;
+    public void updateSelectionImages(List<Image> listImages) {
+        this.advertisements.get(this.currentListingIndex).setImages(listImages);
+    }
+
+    /**
+     * Returns the current displayed Advertisement.
+     */
+    public Advertisement getCurrentAdvertisement() {
+        return this.advertisements.get(this.currentListingIndex);
     }
 
     /**
@@ -232,7 +240,7 @@ public class PanelViewResults extends AbstractPanel {
         this.buttonSearch.setBounds(buttonWidth * 3 + (space * 4), 4, buttonWidth, buttonHeight);
         this.buttonLoadImages.setBounds(buttonWidth * 4 + (space * 5), 4, buttonWidth, buttonHeight);
 
-        this.scrollPane.setBounds(space, buttonHeight + (space * 4), (buttonWidth * 5) + (space * 3), objHeight);
+        this.scrollPane.setBounds(space, buttonHeight + (space * 4), (buttonWidth * 5) + (space * 4), objHeight);
         this.scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 

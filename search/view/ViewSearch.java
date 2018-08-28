@@ -120,11 +120,19 @@ public class ViewSearch extends JFrame implements IViewSearch {
     }
 
     /**
+     * Updates the current selected listing with the given list of images.
+     */
+    @Override
+    public void updateSelectionImages(List<Image> listImages) {
+        this.panelViewResults.updateSelectionImages(listImages);
+    }
+
+    /**
      * Returns the current displayed Advertisement.
      */
     @Override
-    public int getCurrentAdvertisement() {
-        return this.panelViewResults.getCurrentIndex();
+    public Advertisement getCurrentAdvertisement() {
+        return this.panelViewResults.getCurrentAdvertisement();
     }
 
     /**

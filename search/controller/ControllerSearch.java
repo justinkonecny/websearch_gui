@@ -7,6 +7,7 @@ import search.view.IViewSearch;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -111,7 +112,8 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
             this.view.hideFrame();
             this.advertisementList = this.model.executeSearch(this.search);
             this.printResults();
-            this.view.displayResultsGUI(this.advertisementList);
+            //create a copy list for the view to prevent external mutation
+            this.view.displayResultsGUI(new ArrayList<Advertisement>(this.advertisementList));
         } catch (IOException e) {
             System.out.println("[Failed to execute search]");;
         }
@@ -122,8 +124,11 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
      */
     private void updateImages() {
         try {
-            Advertisement ad = this.advertisementList.get(this.view.getCurrentAdvertisement());
-            ad.setImages(this.model.getImages(ad));
+            Advertisement ad = this.view.getCurrentAdvertisement();
+            List<Image> imageList = this.model.getImages(ad);
+            int index = this.advertisementList.indexOf(ad);
+            this.advertisementList.get(index).setImages(imageList);
+            this.view.updateSelectionImages(imageList);
         } catch (IOException e) {
             System.out.println("[Failed to load images]");
         }
