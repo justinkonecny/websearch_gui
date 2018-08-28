@@ -82,11 +82,17 @@ public class Search {
                 this.milesMaximum, this.priceMaximum, this.model,
                 this.milesMinimum, this.yearMinimum);
 
+        //jersey shore search link
+        String url_js = String.format(url, "jerseyshore", this.priceMinimum,
+                this.milesMaximum, this.priceMaximum, this.model,
+                this.milesMinimum, this.yearMinimum);
+
         //map of search urls
         Map<String, String> urls = new HashMap<String, String>();
         urls.put("newjersey", url_nnj);
         urls.put("cnj", url_cnj);
         urls.put("southjersey", url_snj);
+        urls.put("jerseyshore", url_js);
 
         return urls;
     }
