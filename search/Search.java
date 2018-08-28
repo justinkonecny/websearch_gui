@@ -22,7 +22,7 @@ public class Search {
     private int yearMinimum;
 
     /**
-     * Constructs a Search with default search parameters
+     * Constructs a Search with default search parameters.
      */
     public Search() {
         this("bmw", 5000, 13000, 50000, 85000, 2008);
@@ -30,7 +30,7 @@ public class Search {
     }
 
     /**
-     * Constructs a Search with the given search parameters
+     * Constructs a Search with the given search parameters.
      *
      * @param model the desired vehicle model
      * @param priceMinimum the minimum price
@@ -134,7 +134,7 @@ public class Search {
     }
 
     /**
-     * Sets this Search's model to the given model
+     * Sets this Search's model to the given model.
      *
      * @param model the new model
      */
@@ -148,7 +148,7 @@ public class Search {
     }
 
     /**
-     * Sets this Search's minimum price to the given price
+     * Sets this Search's minimum price to the given price.
      *
      * @param priceMinimum the new minimum price
      */
@@ -157,7 +157,7 @@ public class Search {
     }
 
     /**
-     * Sets this Search's maximum price to the given price
+     * Sets this Search's maximum price to the given price.
      *
      * @param priceMaximum the new maximum price
      */
@@ -166,7 +166,8 @@ public class Search {
     }
 
     /**
-     * Sets this Search's minimum miles to the given value
+     * Sets this Search's minimum miles to the given value.
+     *
      * @param milesMinimum the new number of minimum miles
      */
     public void setMilesMinimum(int milesMinimum) {
@@ -174,7 +175,7 @@ public class Search {
     }
 
     /**
-     * Sets this Search's maximum miles to the given value
+     * Sets this Search's maximum miles to the given value.
      *
      * @param milesMaximum the new number of maximum miles
      */
@@ -183,7 +184,7 @@ public class Search {
     }
 
     /**
-     * Sets this Search's minimum year to the given value
+     * Sets this Search's minimum year to the given value.
      *
      * @param yearMinimum the new minimum year
      */
@@ -192,7 +193,7 @@ public class Search {
     }
 
     /**
-     * Returns this Search's model
+     * Returns this Search's model.
      *
      * @return the model
      */
@@ -201,7 +202,7 @@ public class Search {
     }
 
     /**
-     * Returns this Search's minimum price
+     * Returns this Search's minimum price.
      *
      * @return the minimum price
      */
@@ -210,7 +211,7 @@ public class Search {
     }
 
     /**
-     * Returns this Search's maximum price
+     * Returns this Search's maximum price.
      *
      * @return the maximum price
      */
@@ -219,7 +220,7 @@ public class Search {
     }
 
     /**
-     * Returns this Search's minimum number of miles
+     * Returns this Search's minimum number of miles.
      *
      * @return the minimum number of miles
      */
@@ -228,7 +229,7 @@ public class Search {
     }
 
     /**
-     * Returns this Search's maximum number of miles
+     * Returns this Search's maximum number of miles.
      *
      * @return the maximum number of miles
      */
@@ -237,7 +238,7 @@ public class Search {
     }
 
     /**
-     * Returns this Search's minimum year
+     * Returns this Search's minimum year.
      *
      * @return the minimum year
      */
