@@ -60,8 +60,8 @@ public class PanelModelSelector extends AbstractPanel implements FocusListener {
     protected void adjustAddComponents() {
         int objPosX = 10;
         int objPosY = this.height / 5 - 5;
-        int objWidth = this.width - objPosX * 2 - 15;
-        int objHeight = objPosY - 8;
+        int objWidth = this.width - objPosX * 2;
+        int objHeight = objPosY - 5;
         int space = 4;
 
         this.buttonBmw.setBounds(objPosX, space,objWidth, objHeight);
