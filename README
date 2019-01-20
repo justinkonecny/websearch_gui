@@ -5,7 +5,8 @@ Searches for and displays results from craigslist.org for valid vehicle listings
 Starts the web-searching program. The program first prompts the user with an interactive gui for a vehicle model
 to search craigslist.org for, and then it parses the resulting advertisements (using the external library JSoup),
 filtering out irrelevant listings based on certain criteria, including posting location and posting date
-(i.e. filters out old listings that are from nearby cities).
+(i.e. filters out old listings that are from nearby cities). The "resources" folder above contains images
+showing the interface of the program.
 -Requires: jsoup-1.11.3+
 
 ======Project Breakdown======
