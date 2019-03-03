@@ -18,9 +18,13 @@ Project Breakdown
   - (i.e. price, miles, year, etc.)
 - **Advertisement**: represents one listing on the website 
   - (title, location, url, attributes, age, images, description)
+- **Util**: static utilities methods to use across all classes
 ### Model
 - **IModelSearch**: interface represeting the model to execture searching and parsing of the website
-- **ModelSearch**: class implementation of the model
+- **AbstractModelSearch**: abstract implementation for both single- and multi-threaded implementation
+- **ModelSearchST**: class implementation of the single-threaded model
+- **ModelSearchMT**: class implementation of the multi-threaded model
+- **ModelSearchMTWorker**: single thread worker for the multi-threaded model
 ### View
 - **IViewSearch**: interface representing the views displayed to the user
   - includes both model selection and presentation of results
