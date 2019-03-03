@@ -125,7 +125,7 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
     private void updateImages() {
         try {
             Advertisement ad = this.view.getCurrentAdvertisement();
-            List<Image> imageList = this.model.getImages(ad);
+            List<Image> imageList = this.model.getAdImages(ad);
             int index = this.advertisementList.indexOf(ad);
             this.advertisementList.get(index).setImages(imageList);
             this.view.updateSelectionImages(imageList);

@@ -88,6 +88,7 @@ public class PanelViewResults extends AbstractPanel {
             if (ad.getPrice() > 1000) {
                 this.textAttributes.append("Price: $" + ad.getPrice() + System.lineSeparator());
             }
+            this.textAttributes.append(ad.getLocation());
             this.textAttributes.append(System.lineSeparator() + ad.getBody());
 
             if (ad.getImages().size() > 0) {

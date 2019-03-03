@@ -22,5 +22,12 @@ public interface IModelSearch {
      */
     List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException;
 
-    List<Image> getImages(Advertisement advertisement) throws IOException;
+    /**
+     * Returns a list of images for the given advertisement.
+     *
+     * @param advertisement the advertisement to get images from
+     * @return the list of images
+     * @throws IOException if a connection to the given advertisement URL cannot be made
+     */
+    List<Image> getAdImages(Advertisement advertisement) throws IOException;
 }

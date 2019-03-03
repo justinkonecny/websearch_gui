@@ -3,7 +3,8 @@ package search;
 import search.controller.ControllerSearch;
 import search.controller.IControllerSearch;
 import search.model.IModelSearch;
-import search.model.ModelSearch;
+import search.model.ModelSearchMT;
+import search.model.ModelSearchST;
 import search.view.IViewSearch;
 import search.view.ViewSearch;
 
@@ -23,7 +24,10 @@ public class Main {
      */
     public static void main(String[] args) {
         //the model to search and parse the website
-        IModelSearch model = new ModelSearch();
+
+        //IModelSearch model = new ModelSearchST();
+        IModelSearch model = new ModelSearchMT();
+
         //the search query containing the vehicle search parameters (i.e. price, miles, year, etc.)
         Search search = new Search();
         //the interactive view to display results and accept user input

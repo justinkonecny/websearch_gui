@@ -111,18 +111,17 @@ public class Search {
             //search criteria for bmw
             this.model = "bmw";
             this.priceMinimum = 5000;
-            this.priceMaximum = 9000;
+            this.priceMaximum = 10000;
             this.milesMinimum = 50000;
             this.milesMaximum = 80000;
-            this.yearMinimum = 2009;
+            this.yearMinimum = 2010;
         } else if (this.model.equals("mercedes") || this.model.equals("infiniti") || this.model.equals("lexus")) {
             this.priceMinimum = 6000;
             this.priceMaximum = 14000;
             this.milesMinimum = 50000;
             this.milesMaximum = 80000;
-            this.yearMinimum = 2009;
-        } else if (this.model.equals("jeep") || this.model.equals("jw")
-                || this.model.equals("jeep wrangler") || this.model.equals("wrangler")) {
+            this.yearMinimum = 2010;
+        } else if (this.model.equals("jw") || this.model.equals("jeep wrangler") || this.model.equals("wrangler")) {
             //search criteria for mercedes-benz
             this.model = "wrangler";
             this.priceMinimum = 3000;
