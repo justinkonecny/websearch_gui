@@ -38,4 +38,25 @@ public class Util {
         Period period = Period.between(then, now);
         return period.getDays() + (period.getMonths() * 30);
     }
+
+    /**
+     * Returns the correct geographic location given the shortened URL string.
+     *
+     * @param location the shortened URL string, e.g. 'cnj'
+     * @return the geographic location, e.g. 'Central Jersey'
+     */
+    public static String getProperLocation(String location) {
+        switch (location) {
+            case "newjersey":
+                return "New Jersey";
+            case "cnj":
+                return "Central Jersey";
+            case "southjersey":
+                return "South Jersey";
+            case "longisland":
+                return "Long Island";
+            default:
+                return location;
+        }
+    }
 }

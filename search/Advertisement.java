@@ -1,5 +1,7 @@
 package search;
 
+import search.util.Util;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,11 +57,7 @@ public class Advertisement {
      * @param location the new location
      */
     public void setLocation(String location) {
-        if (location.equals("newjersey")) {
-            this.location = "New Jersey";
-        } else {
-            this.location = location;
-        }
+        this.location = Util.getProperLocation(location);
     }
 
     /**
