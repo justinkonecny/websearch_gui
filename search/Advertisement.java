@@ -55,7 +55,11 @@ public class Advertisement {
      * @param location the new location
      */
     public void setLocation(String location) {
-        this.location = location;
+        if (location.equals("newjersey")) {
+            this.location = "New Jersey";
+        } else {
+            this.location = location;
+        }
     }
 
     /**

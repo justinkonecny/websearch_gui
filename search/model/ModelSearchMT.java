@@ -52,7 +52,6 @@ public class ModelSearchMT extends AbstractModelSearch {
                 //create each thread
                 threadLocation[counter] = new ModelSearchMTWorker(entry.getKey(), entry.getValue(), this.oldestPostAge);
                 threadLocation[counter].start();
-                System.out.print("START: " + counter);
                 counter++;
             }
 
@@ -60,7 +59,6 @@ public class ModelSearchMT extends AbstractModelSearch {
                 threadLocation[i].join();
                 List<Advertisement> result = threadLocation[i].getListAdvertisement();
                 listAdvertisement.addAll(result);
-                System.out.println("FINISHED: " + i);
             }
 
             System.out.println("[Combined Total Found]: " + listAdvertisement.size());

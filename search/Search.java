@@ -111,7 +111,7 @@ public class Search {
             //search criteria for bmw
             this.model = "bmw";
             this.priceMinimum = 5000;
-            this.priceMaximum = 10000;
+            this.priceMaximum = 14000;
             this.milesMinimum = 50000;
             this.milesMaximum = 80000;
             this.yearMinimum = 2010;

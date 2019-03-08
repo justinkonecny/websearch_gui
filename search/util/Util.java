@@ -36,6 +36,6 @@ public class Util {
         LocalDate then = LocalDate.of(year, month, day);
         LocalDate now = LocalDateTime.now().toLocalDate();
         Period period = Period.between(then, now);
-        return period.getDays();
+        return period.getDays() + (period.getMonths() * 30);
     }
 }
