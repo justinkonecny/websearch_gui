@@ -1,4 +1,4 @@
-# websearch-gui
+# Java Craiglist Searcher (GUI)
 Searches for and displays results from craigslist.org for valid vehicle listings matching user criteria.
 
 Description
