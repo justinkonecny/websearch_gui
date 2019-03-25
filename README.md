@@ -1,5 +1,5 @@
 # websearch-gui
-Searches for and displays results from craigslist.org for valid vehicle listings matching user criteria
+Searches for and displays results from craigslist.org for valid vehicle listings matching user criteria.
 
 Description
 -----------
