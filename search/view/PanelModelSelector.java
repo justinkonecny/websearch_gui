@@ -30,10 +30,10 @@ public class PanelModelSelector extends AbstractPanel implements FocusListener {
     public PanelModelSelector(int width, int height) {
         super(width, height);
 
-        this.buttonBmw = new Button("Search: BMW", "bmw");
-        this.buttonMercedes = new Button("Search: Mercedes", "mercedes");
-        this.buttonInfiniti = new Button("Search: Infiniti", "infiniti");
-        this.buttonJeep = new Button("Search: Jeep", "jeep");
+        this.buttonBmw = new Button("BMW", "bmw");
+        this.buttonMercedes = new Button("Mercedes", "mercedes");
+        this.buttonInfiniti = new Button("Infiniti", "infiniti");
+        this.buttonJeep = new Button("Jeep", "jeep");
         this.textModelOther = new JTextField("Other (enter to continue)");
 
         this.adjustAddComponents();

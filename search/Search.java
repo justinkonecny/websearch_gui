@@ -107,9 +107,7 @@ public class Search {
             this.model = "mercedes";
         }
 
-        if (this.model.equals("bmw") || this.model.equals("bimmer")) {
-            //search criteria for bmw
-            this.model = "bmw";
+        if (this.model.equals("bmw") || this.model.equals("jeep")) {
             this.priceMinimum = 5000;
             this.priceMaximum = 14000;
             this.milesMinimum = 50000;
@@ -121,14 +119,6 @@ public class Search {
             this.milesMinimum = 50000;
             this.milesMaximum = 80000;
             this.yearMinimum = 2010;
-        } else if (this.model.equals("jw") || this.model.equals("jeep wrangler") || this.model.equals("wrangler")) {
-            //search criteria for mercedes-benz
-            this.model = "wrangler";
-            this.priceMinimum = 3000;
-            this.priceMaximum = 8000;
-            this.milesMinimum = 50000;
-            this.milesMaximum = 110000;
-            this.yearMinimum = 1998;
         }
     }
 

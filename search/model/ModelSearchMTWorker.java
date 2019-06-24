@@ -68,6 +68,8 @@ public class ModelSearchMTWorker extends Thread {
                     advertisement.setLink(adLink);
                     this.listAdvertisement.add(advertisement);
 
+                    System.out.println(advertisement.getTitle());
+
                     try {
                         advertisement.setPrice(Integer.valueOf(adPrice));
                     } catch (NumberFormatException e) {
