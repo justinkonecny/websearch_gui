@@ -9,30 +9,30 @@ import search.util.Util;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class ModelSearchMTWorker extends Thread {
     //the list of advertisements to append to
-    private List<Advertisement> listAdvertisement;
+    private final List<Advertisement> LIST_ADVERTISEMENT;
     //the search location
-    private final String searchLocation;
+    private final String SEARCH_LOCATION;
     //the search URL
-    private final String searchLink;
+    private final String SEARCH_LINK;
     //the oldest post age
-    private final int oldestPostAge;
+    private final int OLDEST_POST_AGE;
 
     /**
      * Constructs one thread as worker dedicated to parsing one search location.
-     * @param searchLocation
-     * @param searchLink
-     * @param oldestPostAge
+     *
+     * @param searchLocation the name of the location to search
+     * @param searchLink     the link to search
+     * @param oldestPostAge  the oldest a post can be in order to be accepted
      */
     public ModelSearchMTWorker(String searchLocation, String searchLink, int oldestPostAge) {
-        this.listAdvertisement = new ArrayList<Advertisement>();
-        this.searchLocation = searchLocation;
-        this.searchLink = searchLink;
-        this.oldestPostAge = oldestPostAge;
+        this.LIST_ADVERTISEMENT = new ArrayList<Advertisement>();
+        this.SEARCH_LOCATION = searchLocation;
+        this.SEARCH_LINK = searchLink;
+        this.OLDEST_POST_AGE = oldestPostAge;
     }
 
     /**
@@ -41,53 +41,79 @@ public class ModelSearchMTWorker extends Thread {
     @Override
     public void run() {
         try {
-            System.out.println("[Parsing]: " + this.searchLocation.toUpperCase());
-            Document doc = Jsoup.connect(this.searchLink).get();
-            Elements listHtml = doc.getElementsByTag("ul").select(".rows");
-            listHtml = listHtml.select("li");
-            int countTotal = 0;
+            System.out.println("[Parsing]: " + ModelSearchMTWorker.this.SEARCH_LOCATION.toUpperCase());
+            Document doc = Jsoup.connect(ModelSearchMTWorker.this.SEARCH_LINK).get();
+            Elements listHtml = doc.getElementsByTag("ul").select(".rows").select("li");
+
+            int threadCount = listHtml.size();
+            AdvertisementLoaderThread[] loaderThreads = new AdvertisementLoaderThread[threadCount];
+
             int countValid = 0;
-
-            Iterator<Element> listIter = listHtml.iterator();
-            while (listIter.hasNext()) {
-                Element adHtml = listIter.next();
-                String adTitle = Util.getCapitalized(adHtml.getElementsByTag("p").select("a[href^=\"http\"]").text());
-                String[] adDate = adHtml.getElementsByTag("time").attr("datetime").split(" ")[0].split("-");
-                int adAge = Util.getTimeDelta(Integer.valueOf(adDate[0]),
-                        Integer.valueOf(adDate[1]), Integer.valueOf(adDate[2]));
-                String adLink = adHtml.getElementsByTag("a").attr("href");
-                String adLocation = adLink.split("\\.")[0].split("//")[1];
-                String adPrice = adHtml.select("span.result-price").first().text().substring(1);
-
-                if (adAge <= this.oldestPostAge && !adLocation.equals("newyork") && !adLocation.equals("philadelphia")) {
-                    countValid++;
-                    Advertisement advertisement = new Advertisement();
-                    advertisement.setTitle(adTitle);
-                    advertisement.setLocation(adLocation);
-                    advertisement.setAge(adAge);
-                    advertisement.setLink(adLink);
-                    this.listAdvertisement.add(advertisement);
-
-                    System.out.println(advertisement.getTitle());
-
-                    try {
-                        advertisement.setPrice(Integer.valueOf(adPrice));
-                    } catch (NumberFormatException e) {
-                        System.out.println("[Could not get price for]: " + adTitle);
-                    }
-                }
-                countTotal++;
+            for (int i = 0; i < threadCount; i++) {
+                loaderThreads[i] = new AdvertisementLoaderThread(listHtml.get(i));
+                loaderThreads[i].start();
             }
 
-            System.out.println("[Total Listings Found]: " + countTotal);
-            System.out.println("[Valid Listings Found]: " + countValid);
-            System.out.println("========================================");
-        } catch (IOException e) {
+            for (int i = 0; i < threadCount; i++) {
+                loaderThreads[i].join();
+                countValid += loaderThreads[i].getCountValid();
+            }
+
+            System.out.println("[Count Valid]: " + countValid);
+
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     public List<Advertisement> getListAdvertisement() {
-        return this.listAdvertisement;
+        return this.LIST_ADVERTISEMENT;
+    }
+
+    private class AdvertisementLoaderThread extends Thread {
+        private Element adHtml;
+        private int countValid;
+
+        AdvertisementLoaderThread(Element adHtml) {
+            this.adHtml = adHtml;
+            this.countValid = 0;
+        }
+
+        @Override
+        public void run() {
+            String adTitle = Util.getCapitalized(adHtml.getElementsByTag("p").select("a[href^=\"http\"]").text());
+
+            String[] adDate = adHtml.getElementsByTag("time").attr("datetime").split(" ")[0].split("-");
+            int adAge = Util.getTimeDelta(Integer.valueOf(adDate[0]), Integer.valueOf(adDate[1]), Integer.valueOf(adDate[2]));
+
+            String adLink = adHtml.getElementsByTag("a").attr("href");
+            String adLocation = adLink.split("\\.")[0].split("//")[1];
+            String adPrice = adHtml.select("span.result-price").first().text().substring(1);
+
+            if (adAge <= ModelSearchMTWorker.this.OLDEST_POST_AGE && !adLocation.equals("newyork") && !adLocation.equals("philadelphia")) {
+                this.countValid++;
+                Advertisement advertisement = new Advertisement();
+                advertisement.setTitle(adTitle);
+                advertisement.setLocation(adLocation);
+                advertisement.setAge(adAge);
+                advertisement.setLink(adLink);
+
+                synchronized (ModelSearchMTWorker.this.LIST_ADVERTISEMENT) {
+                    ModelSearchMTWorker.this.LIST_ADVERTISEMENT.add(advertisement);
+                }
+
+                System.out.println(advertisement.getTitle());
+
+                try {
+                    advertisement.setPrice(Integer.valueOf(adPrice));
+                } catch (NumberFormatException e) {
+                    System.out.println("[Could not get price for]: " + adTitle);
+                }
+            }
+        }
+
+        public int getCountValid() {
+            return this.countValid;
+        }
     }
 }

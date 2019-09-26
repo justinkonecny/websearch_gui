@@ -32,12 +32,12 @@ public class Search {
     /**
      * Constructs a Search with the given search parameters.
      *
-     * @param model the desired vehicle model
+     * @param model        the desired vehicle model
      * @param priceMinimum the minimum price
      * @param priceMaximum the maximum price
      * @param milesMinimum the minimum number of miles
      * @param milesMaximum the maximum number of miles
-     * @param yearMinimum the minimum year
+     * @param yearMinimum  the minimum year
      * @throws IllegalArgumentException if the given model is null
      * @throws IllegalArgumentException if the given prices, miles, or year are negative
      */
@@ -107,7 +107,7 @@ public class Search {
             this.model = "mercedes";
         }
 
-        if (this.model.equals("bmw") || this.model.equals("jeep")) {
+        if (this.model.equals("bmw") || this.model.equals("jeep")) { //some shortcuts defined here for personal use
             this.priceMinimum = 5000;
             this.priceMaximum = 14000;
             this.milesMinimum = 50000;

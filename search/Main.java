@@ -24,13 +24,15 @@ public class Main {
     public static void main(String[] args) {
         //the model to search and parse the website
 
-        //IModelSearch model = new ModelSearchST();
-        IModelSearch model = new ModelSearchMT();
+        //IModelSearch model = new ModelSearchST(); //use this model for single-threaded processing
+        IModelSearch model = new ModelSearchMT(); //use this model for multi-threaded processing
 
         //the search query containing the vehicle search parameters (i.e. price, miles, year, etc.)
         Search search = new Search();
+
         //the interactive view to display results and accept user input
         IViewSearch view = new ViewSearch();
+
         //the controller to process user input
         IControllerSearch controller = new ControllerSearch(model, view, search);
 

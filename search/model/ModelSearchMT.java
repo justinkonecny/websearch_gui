@@ -26,7 +26,7 @@ public class ModelSearchMT extends AbstractModelSearch {
      *
      * @param search the Search containing all parameters desired in the results
      * @return the list of Advertisements found matching the search parameters
-     * @throws IOException if the search URLS cannot be opened or the web page cannot be accessed
+     * @throws IOException              if the search URLS cannot be opened or the web page cannot be accessed
      * @throws IllegalArgumentException if the given Search is null
      */
     @Override
@@ -65,7 +65,7 @@ public class ModelSearchMT extends AbstractModelSearch {
             System.out.println("========================================");
 
             this.removeDuplicates(listAdvertisement);
-        } catch(InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
 

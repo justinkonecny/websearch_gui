@@ -39,15 +39,17 @@ public abstract class AbstractModelSearch implements IModelSearch {
      *
      * @param search the Search containing all parameters desired in the results
      * @return the list of Advertisements found matching the search parameters
-     * @throws IOException if the search URLS cannot be opened or the web page cannot be accessed
+     * @throws IOException              if the search URLS cannot be opened or the web page cannot be accessed
      * @throws IllegalArgumentException if the given Search is null
      */
     @Override
     public List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException {
         this.advertisements = new ArrayList<Advertisement>();
         if (search.getModel().toLowerCase().equals("$all")) {
+            //test for a shortcut to test for a set of 'standard' models
             this.searchList(this.knownModels, search);
         } else if (search.getModel().toLowerCase().equals("$suv")) {
+            //test for a shortcut to search for a set of SUVs
             this.searchList(this.suvModels, search);
         } else {
             this.advertisements = this.conductSearch(search);
@@ -61,7 +63,7 @@ public abstract class AbstractModelSearch implements IModelSearch {
      * Searches all models in the given list with the criteria of the given Search.
      *
      * @param listModels the list of String representing all models to search for
-     * @param search the search with search options
+     * @param search     the search with search options
      * @throws IOException if the given Search is null
      */
     protected void searchList(List<String> listModels, Search search) throws IOException {
@@ -83,18 +85,15 @@ public abstract class AbstractModelSearch implements IModelSearch {
      */
     protected void populateAdvertisements(boolean getAllImages) throws IOException {
         for (Advertisement advertisement : this.advertisements) {
-            System.out.println("[Processing]: " + advertisement.getTitle());
-            String adLink = advertisement.getLink();
-            Document adSoup = Jsoup.connect(adLink).get();
-            List<Image> adImageList = new ArrayList<Image>();
+            Document adSoup = getAdvertisementSoup(advertisement);
             Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
+            List<Image> adImageList = new ArrayList<Image>();
 
             for (Element thumb : adThumbs) {
                 Image img = this.getImage(thumb);
                 if (img != null) {
                     adImageList.add(img);
                 }
-
                 if (!getAllImages) {
                     break;
                 }
@@ -104,6 +103,7 @@ public abstract class AbstractModelSearch implements IModelSearch {
             String adBody = adBodyHtml.ownText();
             Elements attrs = adSoup.getElementsByTag("p").select(".attrgroup");
             String adAttr = "";
+
             Iterator<Element> attrItr = attrs.iterator();
             while (attrItr.hasNext()) {
                 Element attr = attrItr.next();
@@ -113,6 +113,7 @@ public abstract class AbstractModelSearch implements IModelSearch {
                     adAttr += (Util.getCapitalized(child.text()) + System.lineSeparator());
                 }
             }
+
             advertisement.setAttributes(adAttr);
             advertisement.setImages(adImageList);
             advertisement.setBody(adBody);
@@ -122,14 +123,14 @@ public abstract class AbstractModelSearch implements IModelSearch {
 
     /**
      * Given an element, returns the embedded image.
+     *
      * @param thumb the element to search
      * @return the image, or null of none exsits
      */
     protected Image getImage(Element thumb) {
         try {
             URL thumbUrl = new URL(thumb.attr("href"));
-            Image image = ImageIO.read(thumbUrl);
-            return image;
+            return ImageIO.read(thumbUrl);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -138,17 +139,15 @@ public abstract class AbstractModelSearch implements IModelSearch {
 
     /**
      * Returns a list of all images for this advertisement.
+     *
      * @param advertisement the advertisement to get images from
      * @return the list of images
      * @throws IOException if the connection to the ad URL cannot be made
      */
     @Override
     public List<Image> getAdImages(Advertisement advertisement) throws IOException {
-        System.out.println("[Processing]: " + advertisement.getTitle());
-        String adLink = advertisement.getLink();
-        Document adSoup = Jsoup.connect(adLink).get();
+        Elements adThumbs = getAdvertisementSoup(advertisement).getElementsByTag("a").select(".thumb");
         List<Image> adImageList = new ArrayList<Image>();
-        Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
 
         for (Element thumb : adThumbs) {
             Image img = this.getImage(thumb);
@@ -180,6 +179,12 @@ public abstract class AbstractModelSearch implements IModelSearch {
             System.out.println("[Total Listings Remaining]: " + listAds.size());
             System.out.println("========================================");
         }
+    }
+
+    private Document getAdvertisementSoup(Advertisement advertisement) throws IOException {
+        System.out.println("[Processing]: " + advertisement.getTitle());
+        String adLink = advertisement.getLink();
+        return Jsoup.connect(adLink).get();
     }
 
     protected abstract List<Advertisement> conductSearch(Search search) throws IOException, IllegalArgumentException;

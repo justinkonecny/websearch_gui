@@ -34,8 +34,8 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
      * Constructs a ControllerSearch with the given mode, view, and search. Adds this controller as
      * an ActionListener, ListSelectionListener, and KeyListener for the view to handle user input.
      *
-     * @param model the model to handle search execution
-     * @param view the view to handle displaying information and results
+     * @param model  the model to handle search execution
+     * @param view   the view to handle displaying information and results
      * @param search the search containing all desired search parameters
      */
     public ControllerSearch(IModelSearch model, IViewSearch view, Search search) {
@@ -75,31 +75,38 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
      * @param command the command to process
      */
     private void processActionCommand(String command) {
-        if (command.equals("cmd:editattribute")){
-            return;
-        } else if (command.equals("cmd:open")) {
-            //opens the selected listing
-            this.view.openSelected();
-        } else if (command.equals("cmd:openall")) {
-            //opens all listings
-            this.view.openAll();
-        } else if (command.equals("cmd:remove")) {
-            //removes the selected listing
-            this.view.removeSelectedListing();
-        } else if (command.equals("cmd:continue")) {
-            this.view.updateSearchFromInput();
-            //attempts to execute a search otherwise (post model selection)
-            this.executeSearch();
-        } else if (command.equals("cmd:newsearch")) {
-            //displays the model selection gui to restart searching
-            this.view.displayModelGUI();
-        } else if (command.equals("cmd:loadimages")) {
-            //updates the selected Advertisement
-            this.updateImages();
-        } else {
-            //otherwise input from model selection gui
-            this.search.setModel(command);
-            this.view.displayOptionsGUI(this.search);
+        switch (command) {
+            case "cmd:editattribute":
+                return;
+            case "cmd:open":
+                //opens the selected listing
+                this.view.openSelected();
+                break;
+            case "cmd:openall":
+                //opens all listings
+                this.view.openAll();
+                break;
+            case "cmd:remove":
+                //removes the selected listing
+                this.view.removeSelectedListing();
+                break;
+            case "cmd:continue":
+                this.view.updateSearchFromInput();
+                //attempts to execute a search otherwise (post model selection)
+                this.executeSearch();
+                break;
+            case "cmd:newsearch":
+                //displays the model selection gui to restart searching
+                this.view.displayModelGUI();
+                break;
+            case "cmd:loadimages":
+                //updates the selected Advertisement
+                this.updateImages();
+                break;
+            default:
+                //otherwise input from model selection gui
+                this.search.setModel(command);
+                this.view.displayOptionsGUI(this.search);
         }
     }
 
@@ -115,7 +122,7 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
             //create a copy list for the view to prevent external mutation
             this.view.displayResultsGUI(new ArrayList<Advertisement>(this.advertisementList));
         } catch (IOException e) {
-            System.out.println("[Failed to execute search]");;
+            System.out.println("[Failed to execute search]");
         }
     }
 
@@ -171,8 +178,10 @@ public class ControllerSearch implements IControllerSearch, ActionListener, List
     }
 
     @Override
-    public void keyTyped(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
-    public void keyReleased(KeyEvent e) {}
+    public void keyReleased(KeyEvent e) {
+    }
 }
