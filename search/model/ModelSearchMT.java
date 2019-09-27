@@ -50,7 +50,7 @@ public class ModelSearchMT extends AbstractModelSearch {
 
             for (Map.Entry<String, String> entry : search.getSearchLinks().entrySet()) {
                 //create each thread
-                threadLocation[counter] = new ModelSearchMTWorker(entry.getKey(), entry.getValue(), this.oldestPostAge);
+                threadLocation[counter] = new ModelSearchMTWorker(this, entry.getKey(), entry.getValue(), this.oldestPostAge);
                 threadLocation[counter].start();
                 counter++;
             }

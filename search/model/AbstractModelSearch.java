@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public abstract class AbstractModelSearch implements IModelSearch {
@@ -55,7 +54,6 @@ public abstract class AbstractModelSearch implements IModelSearch {
             this.advertisements = this.conductSearch(search);
         }
 
-        this.populateAdvertisements(false);
         return this.advertisements;
     }
 
@@ -85,40 +83,48 @@ public abstract class AbstractModelSearch implements IModelSearch {
      */
     protected void populateAdvertisements(boolean getAllImages) throws IOException {
         for (Advertisement advertisement : this.advertisements) {
-            Document adSoup = getAdvertisementSoup(advertisement);
-            Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
-            List<Image> adImageList = new ArrayList<Image>();
-
-            for (Element thumb : adThumbs) {
-                Image img = this.getImage(thumb);
-                if (img != null) {
-                    adImageList.add(img);
-                }
-                if (!getAllImages) {
-                    break;
-                }
-            }
-
-            Element adBodyHtml = adSoup.getElementsByTag("section").select("[id=postingbody]").first();
-            String adBody = adBodyHtml.ownText();
-            Elements attrs = adSoup.getElementsByTag("p").select(".attrgroup");
-            String adAttr = "";
-
-            Iterator<Element> attrItr = attrs.iterator();
-            while (attrItr.hasNext()) {
-                Element attr = attrItr.next();
-                Iterator<Element> attrChildrenItr = attr.children().select("span").iterator();
-                while (attrChildrenItr.hasNext()) {
-                    Element child = attrChildrenItr.next();
-                    adAttr += (Util.getCapitalized(child.text()) + System.lineSeparator());
-                }
-            }
-
-            advertisement.setAttributes(adAttr);
-            advertisement.setImages(adImageList);
-            advertisement.setBody(adBody);
+            populateAdvertisement(advertisement, getAllImages);
         }
         System.out.println("========================================");
+    }
+
+    /**
+     * Connects to the URL of one Advertisement to save the listing images and attributes.
+     *
+     * @param getAllImages whether or not to processes all advertisement images or just the first
+     * @throws IOException if the advertisement link cannot be connect to
+     */
+    protected void populateAdvertisement(Advertisement advertisement, boolean getAllImages) throws IOException {
+        Document adSoup = getAdvertisementSoup(advertisement);
+        Elements adThumbs = adSoup.getElementsByTag("a").select(".thumb");
+        List<Image> adImageList = new ArrayList<Image>();
+
+        for (Element thumb : adThumbs) {
+            Image img = this.getImage(thumb);
+            if (img != null) {
+                adImageList.add(img);
+            }
+            if (!getAllImages) {
+                break;
+            }
+        }
+
+        Element adBodyHtml = adSoup.getElementsByTag("section").select("[id=postingbody]").first();
+        String adBody = adBodyHtml.ownText();
+        Elements attrs = adSoup.getElementsByTag("p").select(".attrgroup");
+        String adAttr = "";
+
+        for (Element attr : attrs) {
+            Elements attrChildrenItr = attr.children().select("span");
+
+            for (Element child : attrChildrenItr) {
+                adAttr += (Util.getCapitalized(child.text()) + System.lineSeparator());
+            }
+        }
+
+        advertisement.setAttributes(adAttr);
+        advertisement.setImages(adImageList);
+        advertisement.setBody(adBody);
     }
 
     /**
@@ -181,7 +187,7 @@ public abstract class AbstractModelSearch implements IModelSearch {
         }
     }
 
-    private Document getAdvertisementSoup(Advertisement advertisement) throws IOException {
+    protected Document getAdvertisementSoup(Advertisement advertisement) throws IOException {
         System.out.println("[Processing]: " + advertisement.getTitle());
         String adLink = advertisement.getLink();
         return Jsoup.connect(adLink).get();

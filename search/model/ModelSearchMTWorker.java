@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModelSearchMTWorker extends Thread {
+    //the model
+    private final ModelSearchMT model;
     //the list of advertisements to append to
     private final List<Advertisement> LIST_ADVERTISEMENT;
     //the search location
@@ -28,7 +30,8 @@ public class ModelSearchMTWorker extends Thread {
      * @param searchLink     the link to search
      * @param oldestPostAge  the oldest a post can be in order to be accepted
      */
-    public ModelSearchMTWorker(String searchLocation, String searchLink, int oldestPostAge) {
+    public ModelSearchMTWorker(ModelSearchMT model, String searchLocation, String searchLink, int oldestPostAge) {
+        this.model = model;
         this.LIST_ADVERTISEMENT = new ArrayList<Advertisement>();
         this.SEARCH_LOCATION = searchLocation;
         this.SEARCH_LINK = searchLink;
@@ -97,6 +100,12 @@ public class ModelSearchMTWorker extends Thread {
                 advertisement.setLocation(adLocation);
                 advertisement.setAge(adAge);
                 advertisement.setLink(adLink);
+
+                try {
+                    ModelSearchMTWorker.this.model.populateAdvertisement(advertisement, true);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 synchronized (ModelSearchMTWorker.this.LIST_ADVERTISEMENT) {
                     ModelSearchMTWorker.this.LIST_ADVERTISEMENT.add(advertisement);

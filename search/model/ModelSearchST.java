@@ -28,6 +28,23 @@ public class ModelSearchST extends AbstractModelSearch {
     }
 
     /**
+     * Executes the given Search and returns the resulting listings, checking for the selected model.
+     * Populates each advertisement individually.
+     *
+     * @param search the Search containing all parameters desired in the results
+     * @return the list of Advertisements found matching the search parameters
+     * @throws IOException              if the search URLS cannot be opened or the web page cannot be accessed
+     * @throws IllegalArgumentException if the given Search is null
+     */
+    @Override
+    public List<Advertisement> executeSearch(Search search) throws IOException, IllegalArgumentException {
+        super.executeSearch(search);
+        this.populateAdvertisements(true);
+        return this.advertisements;
+    }
+
+
+    /**
      * Executes the given Search and returns the resulting listings.
      *
      * @param search the Search containing all parameters desired in the results
