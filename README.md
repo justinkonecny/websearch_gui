@@ -39,10 +39,10 @@ showing the interface of the program.
 
 ## User Interface
 ### Model Selector
-![Alt text](resources/model_selector.png "Model Selector")
+![Alt text](resources/screen_model_selector.png "Model Selector")
 
 ### Search Options
-![Alt text](resources/search_option.png "Search Options")
+![Alt text](resources/screen_search_options.png "Search Options")
 
 ### Results
-![Alt text](resources/results_display.png "Results Display")
+![Alt text](resources/screen_results_display.png "Results Display")
